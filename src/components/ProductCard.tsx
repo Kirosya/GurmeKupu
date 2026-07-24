@@ -4,6 +4,22 @@ import React, { useState } from 'react';
 import { Product, UnitType, OrderItem } from '@/lib/types';
 import { Plus, Check, Scale } from 'lucide-react';
 
+// **metin** → <strong>metin</strong> olarak render eder
+function BoldText({ text }: { text: string }) {
+  const parts = text.split(/\*\*(.+?)\*\*/g);
+  return (
+    <>
+      {parts.map((part, i) =>
+        i % 2 === 1 ? (
+          <strong key={i} className="text-amber-400 font-bold">{part}</strong>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </>
+  );
+}
+
 interface ProductCardProps {
   product: Product;
   onAddToCart: (item: OrderItem) => void;
@@ -73,8 +89,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }
           <h3 className="text-lg font-bold text-stone-100 group-hover:text-amber-400 transition-colors line-clamp-1">
             {product.name}
           </h3>
-          <p className="text-xs text-stone-400 mt-1.5 line-clamp-2 leading-relaxed min-h-[36px]">
-            {product.description}
+          <p className="text-xs text-stone-400 mt-1.5 leading-relaxed">
+            <BoldText text={product.description} />
           </p>
 
           <div className="mt-4 flex items-baseline justify-between border-b border-stone-800/80 pb-3">
