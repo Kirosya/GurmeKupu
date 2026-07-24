@@ -32,7 +32,7 @@ export default function LandingHomePage() {
                 className="px-8 py-4 rounded-full bg-green-500 hover:bg-green-600 text-white font-bold text-base hover:scale-105 transition-all flex items-center gap-2 shadow-lg shadow-green-900/20"
               >
                 <MessageCircle className="w-5 h-5" />
-                <span>WhatsApp'tan Sipariş Ver</span>
+                <span>WhatsApp'tan Sipariş Bağlantısı Al</span>
               </a>
               <a
                 href="https://www.instagram.com/gurmekupu"
