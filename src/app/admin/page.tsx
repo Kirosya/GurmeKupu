@@ -7,7 +7,7 @@ import { ProductEditor } from '@/components/admin/ProductEditor';
 import { ShieldCheck, ShoppingBag, Utensils, Lock, LogOut, ArrowLeft, BellRing, Bell } from 'lucide-react';
 import Link from 'next/link';
 
-export default function AdminPage() {
+function AdminPageContent() {
   const searchParams = useSearchParams();
   const [isMounted, setIsMounted] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -243,3 +243,12 @@ export default function AdminPage() {
     </div>
   );
 }
+
+export default function AdminPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-stone-950 flex items-center justify-center"><div className="text-amber-500 font-bold">Yükleniyor...</div></div>}>
+      <AdminPageContent />
+    </React.Suspense>
+  );
+}
+
