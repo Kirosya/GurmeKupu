@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getProductsDB, saveProductsDB } from '@/lib/redis';
 import { Product } from '@/lib/types';
 
+export const runtime = 'edge';
+
 export async function GET() {
   try {
     const products = await getProductsDB();

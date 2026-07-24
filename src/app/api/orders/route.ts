@@ -3,6 +3,8 @@ import { getOrdersDB, createOrderDB, updateOrderStatusDB } from '@/lib/redis';
 import { sendOrderNotifications } from '@/lib/notifications';
 import { Order, OrderItem } from '@/lib/types';
 
+export const runtime = 'edge';
+
 export async function GET() {
   try {
     const orders = await getOrdersDB();
@@ -31,10 +33,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Toplam Fiyatı Sunucu Tarafında Güvenli Hesapla
     const totalPrice = items.reduce((sum, item) => sum + (item.itemTotalPrice || 0), 0);
-
-    // Rastgele ve şık bir Sipariş Numarası Üret (Örn: GK-7821)
     const orderId = `GK-${Math.floor(1000 + Math.random() * 9000)}`;
 
     const newOrder: Order = {
@@ -51,7 +50,6 @@ export async function POST(req: NextRequest) {
 
     const savedOrder = await createOrderDB(newOrder);
 
-    // Arka planda mobil push ve Telegram bildirimlerini tetikle
     sendOrderNotifications(savedOrder).catch(err => {
       console.error('Bildirim gönderim hatası:', err);
     });
