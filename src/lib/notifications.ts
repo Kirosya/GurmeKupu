@@ -1,80 +1,53 @@
 import { Order } from './types';
 import { getPushTokensDB } from './redis';
+import { sendFcmNotification } from './fcm';
 
-/**
- * Yeni sipariş geldiğinde yöneticinin telefonuna ve Telegram hesabına anlık bildirim gönderir.
- */
 export async function sendOrderNotifications(order: Order) {
-  const formattedItems = order.items
-    .map(
-      item =>
-        `• ${item.productName}: ${item.quantityValue} ${item.unitType.toUpperCase()} (${item.itemTotalPrice.toLocaleString('tr-TR')} ₺)`
-    )
-    .join('\n');
-
-  const notificationTitle = `🔔 YENİ SİPARİŞ ALINDI! (#${order.id})`;
-  const notificationBody = `${order.customerName} - ${order.totalPrice.toLocaleString('tr-TR')} ₺\nTeslimat: ${order.customerAddress.substring(0, 45)}...`;
-
-  // 1. Expo Push Notifications Gönderimi
   try {
     const tokens = await getPushTokensDB();
+    const title = `🔔 YENİ SİPARİŞ ALINDI! (#${order.id})`;
+    const body = `${order.customerName} - ${order.totalPrice.toLocaleString('tr-TR')} ₺`;
+    
+    console.log(`Bildirim gönderiliyor... Toplam cihaz: ${tokens?.length || 0}`);
+    
+    const firebasePrivateKey = process.env.FIREBASE_PRIVATE_KEY;
+
     if (tokens && tokens.length > 0) {
-      const messages = tokens.map(token => ({
-        to: token,
-        sound: 'default',
-        priority: 'high',
-        title: notificationTitle,
-        body: notificationBody,
-        data: { orderId: order.id, customerName: order.customerName, totalPrice: order.totalPrice },
-      }));
-
-      await fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Accept-encoding': 'gzip, deflate',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(messages),
-      });
-      console.log(`[Push Notification] ${tokens.length} bildirim token'ına başarıyla iletildi.`);
+      for (const token of tokens) {
+        // Doğrudan Native FCM Bildirimi Gönderimi
+        if (firebasePrivateKey && token.length > 22 && !token.startsWith('web-browser')) {
+          await sendFcmNotification(token, title, body, firebasePrivateKey.replace(/\\n/g, '\n'));
+        }
+      }
     }
-  } catch (err) {
-    console.error('Expo Push Notification gönderim hatası:', err);
-  }
 
-  // 2. Telegram Bot Entegrasyonu (Yedek Bildirim Katmanı)
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+    // TELEGRAM BİLDİRİMİ
+    const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+    
+    if (BOT_TOKEN && CHAT_ID) {
+      const formattedItems = order.items
+        .map(
+          item =>
+            `• ${item.productName}: ${item.quantityValue} ${item.unitType.toUpperCase()} (${item.itemTotalPrice.toLocaleString('tr-TR')} ₺)`
+        )
+        .join('\n');
 
-  if (botToken && chatId) {
-    try {
-      const telegramMessage = `
-🍲 *GURME KÜPÜ - YENİ SİPARİŞ* (#${order.id})
-
-👤 *Müşteri:* ${order.customerName}
-📞 *Telefon:* ${order.customerPhone}
-📍 *Adres:* ${order.customerAddress}
-${order.orderNote ? `📝 *Sipariş Notu:* ${order.orderNote}\n` : ''}
-📦 *Sipariş İçeriği:*
-${formattedItems}
-
-💰 *Toplam Tutar:* *${order.totalPrice.toLocaleString('tr-TR')} ₺*
-⏰ *Sipariş Zamanı:* ${new Date(order.createdAt).toLocaleString('tr-TR')}
-      `.trim();
-
-      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      const message = `🔔 *YENİ SİPARİŞ*\n\n👤 ${order.customerName}\n📱 ${order.customerPhone}\n📍 ${order.customerAddress}\n\n📝 Not: ${order.orderNote || 'Yok'}\n\n🛍️ *Ürünler:*\n${formattedItems}\n\n💰 *Toplam:* ${order.totalPrice.toLocaleString('tr-TR')} ₺`;
+      
+      const tgUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+      await fetch(tgUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          chat_id: chatId,
-          text: telegramMessage,
-          parse_mode: 'Markdown',
-        }),
-      });
-      console.log('[Telegram Notification] Telegram kanalına mesaj iletildi.');
-    } catch (err) {
-      console.error('Telegram notification error:', err);
+          chat_id: CHAT_ID,
+          text: message,
+          parse_mode: 'Markdown'
+        })
+      }).catch(err => console.error('Telegram hata:', err));
     }
+
+  } catch (error) {
+    console.error('Bildirim gönderim hatası:', error);
   }
 }
