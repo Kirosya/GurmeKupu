@@ -1,11 +1,81 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
-import { MessageCircle, Instagram, ArrowDownRight, Phone, Mail, MapPin } from 'lucide-react';
+import { MessageCircle, Instagram, ArrowDownRight, Phone, Mail, MapPin, Star } from 'lucide-react';
+
+const ALL_REVIEWS = [
+  {
+    name: 'Mehmet Yılmaz',
+    company: 'Yılmaz Catering',
+    text: 'Toplu siparişlerimizde hiç sorun yaşamadık. Yaprak sarması ve lahana sarması kalitesi tutarlı, her kolide aynı lezzeti buluyoruz. Kesinlikle tavsiye ederim.',
+    stars: 5,
+  },
+  {
+    name: 'Fatma Kaya',
+    company: 'Kaya Yemek Fabrikası',
+    text: 'İçli köfte ve mantı siparişlerimizi düßeğdük fiyata ve zamanında alıyoruz. -18°C’de raf ömrü bizim için çok kritik, bu konuda hiç sorun çıkmadı.',
+    stars: 5,
+  },
+  {
+    name: 'Ali Demir',
+    company: 'Ankara Toplu Yemek A.Ş.',
+    text: 'Koli bazlı satış sistemi işimizi çok kolaylaştırdı. Minimum sipariş esnekliği sayesinde stok yönetimimiz çok daha verimli hale geldi.',
+    stars: 5,
+  },
+  {
+    name: 'Ayşe Özcan',
+    company: 'Özcan Organizasyon',
+    text: 'Etkinlik yemeklerimiz için patlıcan dolma ve biber dolma alıyoruz. Misafirlerimizden çok olumlu geri dönüşler alıyoruz. Hizmet kalitesi yüksek.',
+    stars: 5,
+  },
+  {
+    name: 'Hasan Şahin',
+    company: 'Şahin Lojistik Yemek',
+    text: 'Teslimat süreci çok düzgün, paketleme hijyenik. Uzun vadeli iş birliği için doğru adres olduğuna emin olduk.',
+    stars: 4,
+  },
+  {
+    name: 'Zeynep Arslan',
+    company: 'Arslan Mutfak',
+    text: 'Gurme Küpü ile çalışmaya başlamadan önce çeşitli firmalar denedik. Tutarlı kalite ve dürüst iletişim açısından bu firmayı çok daha üstün bulduk.',
+    stars: 5,
+  },
+  {
+    name: 'Mustafa Çelik',
+    company: 'Çelik Kurumsal Yemek',
+    text: 'Menü danışmanlığı hizmetinden de yararlandık, beklentimizin üzzerinde destek aldık. Özellikle lezzet haritası çok işimize yaradı.',
+    stars: 5,
+  },
+  {
+    name: 'Selin Koç',
+    company: 'Koç Okul Yemeği',
+    text: 'Okul kantinimiz için düzenli sipariş veriyoruz. Ürünler çocukların favorisi oldu. Özellikle mantı ve içli köfte çok tutuldu.',
+    stars: 5,
+  },
+  {
+    name: 'Recep Yıldız',
+    company: 'Yıldız Catering Grubu',
+    text: 'Euro palet düzeyinde toplu sipariş verdik, lojistik süreç çok akıcıydı. Her aşamada bilgilendirme yapıldı, güven veren bir firma.',
+    stars: 4,
+  },
+  {
+    name: 'Hatice Güneş',
+    company: 'Güneş Kurumsal Mutfak',
+    text: 'B2B modeliyle çalışmak isteyen mutfaklar için ideal bir tedarikçi. Fiyat-kalite dengesi rakiplerine göre çok daha iyi.',
+    stars: 5,
+  },
+];
 
 export default function LandingHomePage() {
+  const [reviews, setReviews] = useState(ALL_REVIEWS.slice(0, 3));
+
+  useEffect(() => {
+    const shuffled = [...ALL_REVIEWS].sort(() => Math.random() - 0.5);
+    setReviews(shuffled.slice(0, 3));
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#FFFDF9] text-slate-900 flex flex-col font-sans">
       <Header />
@@ -155,8 +225,43 @@ export default function LandingHomePage() {
 
           <div className="mt-10 text-center">
             <Link href="/menu" className="inline-flex items-center gap-2 bg-[#0A1A3A] hover:bg-[#163060] text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-lg shadow-blue-900/20">
-              Tüm Ürün Kataloğunu Gör →
+              Tüm Ürün Katalogunu Gör →
             </Link>
+          </div>
+        </section>
+
+        {/* ═══ YORUMLAR ═══ */}
+        <section className="bg-orange-50/60 border-y border-orange-100 py-20 px-6 sm:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center gap-4 mb-12">
+              <div>
+                <span className="text-xs font-bold tracking-[0.3em] uppercase text-[#D9480F] block mb-1">Müşteri Yorumları</span>
+                <h2 className="text-3xl font-black text-[#0A1A3A]">İş Ortaklarımız Ne Diyor?</h2>
+              </div>
+              <ArrowDownRight className="w-8 h-8 text-[#D9480F] flex-shrink-0" />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {reviews.map((review, i) => (
+                <div key={i} className="bg-white rounded-3xl p-7 shadow-lg shadow-blue-900/5 border border-orange-100 flex flex-col gap-4 hover:shadow-xl hover:shadow-orange-900/10 transition-shadow">
+                  <div className="flex gap-1">
+                    {Array.from({ length: 5 }).map((_, si) => (
+                      <Star
+                        key={si}
+                        className={`w-4 h-4 ${
+                          si < review.stars ? 'text-[#D9480F] fill-[#D9480F]' : 'text-slate-200 fill-slate-200'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-slate-600 leading-relaxed text-sm flex-1">&ldquo;{review.text}&rdquo;</p>
+                  <div className="pt-3 border-t border-slate-100">
+                    <p className="font-black text-[#0A1A3A] text-sm">{review.name}</p>
+                    <p className="text-xs text-[#D9480F] font-bold mt-0.5">{review.company}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
