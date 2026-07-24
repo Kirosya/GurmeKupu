@@ -20,12 +20,11 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
         {/* Brand Logo & Name */}
         <Link href="/" className="flex items-center gap-3 group">
           {/* Logo ikonunun yerine gerçek GK logosu — lacivert arka plan kaldırıldı, mix-blend-mode ile entegre */}
-          <div className="w-12 h-12 flex items-center justify-center group-hover:scale-105 transition-transform rounded-xl overflow-hidden">
+          <div className="w-12 h-12 flex items-center justify-center group-hover:scale-105 transition-transform">
             <img
               src="/logo.png"
               alt="GK"
-              className="w-full h-full object-cover scale-110"
-              style={{ mixBlendMode: 'screen' }}
+              className="w-full h-full object-contain"
             />
           </div>
           <div>
