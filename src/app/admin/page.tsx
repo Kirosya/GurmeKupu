@@ -1,23 +1,38 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { OrderList } from '@/components/admin/OrderList';
 import { ProductEditor } from '@/components/admin/ProductEditor';
-import { ShieldCheck, ShoppingBag, Utensils, Lock, LogOut, ArrowLeft, Bell, BellRing, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, ShoppingBag, Utensils, Lock, LogOut, ArrowLeft, BellRing, Bell } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AdminPage() {
+  const searchParams = useSearchParams();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'orders' | 'products'>('orders');
   const [notificationPermission, setNotificationPermission] = useState<NotificationPermission>('default');
 
+  // Kalıcı Oturum ve Mobil App Otomatik Giriş Kontrolü
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'Notification' in window) {
-      setNotificationPermission(Notification.permission);
+    if (typeof window !== 'undefined') {
+      const savedAuth = localStorage.getItem('gurmekupu_admin_auth');
+      const secretParam = searchParams.get('secret');
+      const mobileParam = searchParams.get('mobile');
+
+      // 1. Mobil app özel ayrıcalıklı otomatik giriş veya önceden kaydedilmiş oturum
+      if (savedAuth === 'true' || secretParam === 'gurme123' || mobileParam === '1') {
+        setIsAuthenticated(true);
+        localStorage.setItem('gurmekupu_admin_auth', 'true');
+      }
+
+      if ('Notification' in window) {
+        setNotificationPermission(Notification.permission);
+      }
     }
-  }, []);
+  }, [searchParams]);
 
   const requestWebNotificationPermission = async () => {
     if (typeof window !== 'undefined' && 'Notification' in window) {
@@ -47,8 +62,11 @@ export default function AdminPage() {
     if (password === 'gurme123' || password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
       setIsAuthenticated(true);
       setErrorMsg('');
+      // Oturumu kalıcı olarak localStorage'a kaydet (Böylece uygulamadan çıkıp girilse de şifre sormaz)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('gurmekupu_admin_auth', 'true');
+      }
       
-      // Giriş yapıldığı an tarayıcı bildirim izni iste
       setTimeout(() => {
         if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission !== 'granted') {
           requestWebNotificationPermission();
@@ -57,6 +75,13 @@ export default function AdminPage() {
 
     } else {
       setErrorMsg('Hatalı şifre. Lütfen tekrar deneyiniz.');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('gurmekupu_admin_auth');
     }
   };
 
@@ -156,7 +181,7 @@ export default function AdminPage() {
             </button>
 
             <button
-              onClick={() => setIsAuthenticated(false)}
+              onClick={handleLogout}
               className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 border border-stone-800 text-stone-400 hover:text-red-400 text-xs font-semibold transition-colors"
             >
               <LogOut className="w-4 h-4" />
