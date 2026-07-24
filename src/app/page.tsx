@@ -102,6 +102,32 @@ export default function LandingHomePage() {
           </div>
         </section>
 
+        {/* MARKALARIMIZ / REFERANSLARIMIZ */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 border-t border-stone-800/50 mt-12">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-bold text-stone-100">İş Ortaklarımız & Markalarımız</h2>
+            <p className="text-stone-400 text-sm mt-2">Lezzet yolculuğumuzda bize eşlik eden değerler</p>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-16 opacity-60">
+            {/* Brand 1 */}
+            <div className="flex items-center gap-2 font-black text-xl tracking-widest text-stone-300 hover:text-amber-400 hover:opacity-100 transition-all cursor-default">
+              <Award className="w-8 h-8" /> <span>GURME<span className="font-light">CO</span></span>
+            </div>
+            {/* Brand 2 */}
+            <div className="flex items-center gap-2 font-black text-xl tracking-widest text-stone-300 hover:text-amber-400 hover:opacity-100 transition-all cursor-default">
+              <Star className="w-8 h-8" /> <span>EVENT<span className="font-light">PRO</span></span>
+            </div>
+            {/* Brand 3 */}
+            <div className="flex items-center gap-2 font-black text-xl tracking-widest text-stone-300 hover:text-amber-400 hover:opacity-100 transition-all cursor-default">
+              <ShieldCheck className="w-8 h-8" /> <span>PRIME<span className="font-light">CATERING</span></span>
+            </div>
+            {/* Brand 4 */}
+            <div className="flex items-center gap-2 font-black text-xl tracking-widest text-stone-300 hover:text-amber-400 hover:opacity-100 transition-all cursor-default">
+              <Sparkles className="w-8 h-8" /> <span>LÜKS<span className="font-light">DAVET</span></span>
+            </div>
+          </div>
+        </section>
+
       </main>
 
       {/* Footer */}
