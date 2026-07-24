@@ -172,18 +172,18 @@ export default function SiparisPage() {
         onClose={() => setSuccessOrderId(null)}
       />
 
-      {/* Floating Bottom Cart Bar for Mobile */}
+      {/* Floating Sticky Bottom Cart Bar (Always visible on all screens when cart has items) */}
       {cartItems.length > 0 && (
-        <div className="fixed bottom-4 left-4 right-4 z-40 sm:hidden">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-md">
           <button
             onClick={() => setIsCartOpen(true)}
-            className="w-full py-3.5 px-6 rounded-2xl gold-gradient-bg text-stone-950 font-black text-sm shadow-2xl shadow-amber-950/80 border border-amber-400/50 flex items-center justify-between active:scale-95 transition-all"
+            className="w-full py-4 px-6 rounded-2xl gold-gradient-bg text-stone-950 font-black text-sm sm:text-base shadow-2xl shadow-amber-950/90 border border-amber-400/50 flex items-center justify-between hover:brightness-110 active:scale-95 transition-all"
           >
-            <div className="flex items-center gap-2.5">
-              <ShoppingBag className="w-5 h-5" />
+            <div className="flex items-center gap-3">
+              <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
               <span>SEPETİ GÖR</span>
             </div>
-            <span className="bg-stone-950 text-amber-400 text-xs font-black px-3 py-1 rounded-full border border-amber-500">
+            <span className="bg-stone-950 text-amber-400 text-xs sm:text-sm font-black px-3.5 py-1.5 rounded-full border border-amber-500">
               {cartItems.length} Ürün
             </span>
           </button>
