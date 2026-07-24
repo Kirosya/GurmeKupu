@@ -60,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
           </Link>
 
           {/* Cart Button (Only show if handler is passed or on /siparis) */}
-          {onOpenCart ? (
+          {onOpenCart && (
             <button
               onClick={onOpenCart}
               className="relative flex items-center gap-2 px-4 py-2.5 rounded-xl gold-gradient-bg text-stone-950 font-bold text-sm shadow-lg shadow-amber-900/30 hover:brightness-110 active:scale-95 transition-all"
