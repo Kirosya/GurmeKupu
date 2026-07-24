@@ -50,14 +50,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
         {/* Navigation Actions */}
         <div className="flex items-center gap-3">
           
-          {/* Admin Panel Quick Link */}
-          <Link
-            href="/admin"
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-stone-300 hover:text-amber-400 bg-stone-900/60 hover:bg-stone-800 border border-stone-800 transition-colors"
-          >
-            <ShieldCheck className="w-4 h-4 text-amber-500" />
-            <span className="hidden sm:inline">Yönetici Paneli</span>
-          </Link>
+
 
           {/* Cart Button (Only show if handler is passed or on /siparis) */}
           {onOpenCart && (

@@ -164,7 +164,6 @@ export default function LandingHomePage() {
 
           <div className="flex items-center gap-8 font-medium">
             <Link href="/" className="hover:text-orange-600 transition-colors">Ana Sayfa</Link>
-            <Link href="/admin" className="hover:text-orange-600 transition-colors">Yönetici Girişi</Link>
           </div>
 
           <p className="text-center md:text-right">
