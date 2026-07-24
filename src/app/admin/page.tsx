@@ -9,6 +9,7 @@ import Link from 'next/link';
 
 export default function AdminPage() {
   const searchParams = useSearchParams();
+  const [isMounted, setIsMounted] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string>('');
@@ -17,6 +18,7 @@ export default function AdminPage() {
 
   // Kalıcı Oturum ve Mobil App Otomatik Giriş Kontrolü
   useEffect(() => {
+    setIsMounted(true);
     if (typeof window !== 'undefined') {
       const savedAuth = localStorage.getItem('gurmekupu_admin_auth');
       const secretParam = searchParams.get('secret');
@@ -33,6 +35,9 @@ export default function AdminPage() {
       }
     }
   }, [searchParams]);
+
+  if (!isMounted) return null; // Hydration ve titreme önleyici
+
 
   const requestWebNotificationPermission = async () => {
     if (typeof window !== 'undefined' && 'Notification' in window) {
