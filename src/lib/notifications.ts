@@ -5,8 +5,12 @@ import { sendFcmNotification } from './fcm';
 export async function sendOrderNotifications(order: Order) {
   try {
     const tokens = await getPushTokensDB();
-    const title = `🔔 YENİ SİPARİŞ ALINDI! (#${order.id})`;
-    const body = `${order.customerName} - ${order.totalPrice.toLocaleString('tr-TR')} ₺`;
+    const itemsSummary = order.items
+      .map(item => `${item.quantityValue}${item.unitType.toLowerCase()} ${item.productName}`)
+      .join(', ');
+      
+    const title = `🍽️ YENİ SİPARİŞ: ${order.totalPrice.toLocaleString('tr-TR')} ₺`;
+    const body = itemsSummary;
     
     console.log(`Bildirim gönderiliyor... Toplam cihaz: ${tokens?.length || 0}`);
     
