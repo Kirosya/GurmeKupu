@@ -45,5 +45,23 @@ export const INITIAL_PRODUCTS: Product[] = [
     pricePerKg: 250,
     image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80',
     isAvailable: true
+  },
+  {
+    id: 'prod-6',
+    name: 'Gurme İçli Köfte (-18°C)',
+    description: 'Özenle hazırlanmış geleneksel içli köfte. Ambalaj: 10 kg / koli. Adet: 250 adet/koli. Raf ömrü: 12 ay (-18°C). (Euro palet 120x80cm toplam ürün ağırlık 640kg)',
+    category: 'Zeytinyağlılar & Meze',
+    pricePerKg: 420,
+    image: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=800&q=80',
+    isAvailable: true
+  },
+  {
+    id: 'prod-7',
+    name: 'Gurme Mantı (-18°C)',
+    description: 'Özenle yoğrulmuş ince hamur içinde geleneksel etli mantı. Ambalaj: 10 kg / koli. Raf ömrü: 12 ay (-18°C).',
+    category: 'Börek & Mantı',
+    pricePerKg: 480,
+    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+    isAvailable: true
   }
 ];
