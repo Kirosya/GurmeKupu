@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingBag, Utensils, ShieldCheck, Home, ChefHat, Star } from 'lucide-react';
+import { ShoppingBag, Star, Home } from 'lucide-react';
 
 interface HeaderProps {
   cartCount?: number;
@@ -19,15 +19,20 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
         
         {/* Brand Logo & Name */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-12 h-12 rounded-xl gold-gradient-bg flex items-center justify-center shadow-lg shadow-amber-900/40 group-hover:scale-105 transition-transform">
-            <Utensils className="w-6 h-6 text-stone-950 font-bold" />
+          {/* Logo ikonunun yerine gerçek GK logosu — lacivert arka plan kaldırıldı, mix-blend-mode ile entegre */}
+          <div className="w-12 h-12 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <img
+              src="/logo.png"
+              alt="GK"
+              className="w-full h-full object-contain"
+            />
           </div>
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight font-sans text-stone-100 flex items-center gap-2">
               GURME <span className="gold-gradient-text">KÜPÜ</span>
             </h1>
             <p className="text-xs text-amber-400/80 font-medium">
-              Catering & Kiloyla Ev Lezzetleri
+              Profesyonel Gıda Çözümleri · Ankara
             </p>
           </div>
         </Link>
@@ -44,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
           >
             <Home className="w-3.5 h-3.5" /> Ana Sayfa
           </Link>
-          
+
           <Link
             href="/menu"
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
@@ -66,16 +71,10 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
           >
             <Star className="w-3.5 h-3.5" /> Markalarımız
           </Link>
-
-
         </nav>
 
-        {/* Navigation Actions */}
+        {/* Right Actions */}
         <div className="flex items-center gap-3">
-          
-
-
-          {/* Cart Button (Only show if handler is passed or on /siparis) */}
           {onOpenCart && (
             <button
               onClick={onOpenCart}
@@ -91,7 +90,6 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
               )}
             </button>
           )}
-
         </div>
 
       </div>
