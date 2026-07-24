@@ -93,19 +93,24 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <>
+          {/* Backdrop - covers the entire viewport */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-stone-950/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-stone-950/80 backdrop-blur-sm"
           />
+
+          {/* Modal - always centered on viewport with fixed positioning */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="w-full max-w-lg bg-stone-900 border border-stone-800 rounded-3xl text-stone-100 shadow-2xl flex flex-col max-h-[90vh] overflow-hidden z-10"
+            initial={{ opacity: 0, scale: 0.94, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 16 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100vw-2rem)] max-w-lg bg-stone-900 border border-stone-800 rounded-3xl text-stone-100 shadow-2xl flex flex-col"
+            style={{ maxHeight: '90vh' }}
           >
             {/* Header */}
             <div className="p-6 border-b border-stone-800 flex items-center justify-between bg-stone-900">
@@ -191,7 +196,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </div>
             )}
           </motion.div>
-        </div>
+        </>
       )}
     </AnimatePresence>
   );
