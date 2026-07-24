@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ShoppingBag, Star, Home, Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeaderProps {
   cartCount?: number;
@@ -94,7 +95,8 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl bg-stone-900 border border-stone-800 text-stone-300 hover:text-white transition-colors"
+            className="md:hidden p-2 rounded-2xl bg-stone-900 border border-stone-800 text-stone-300 hover:text-white transition-all active:scale-95"
+            aria-label="Menüyü Aç"
           >
             {isMobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -106,47 +108,57 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
       </div>
 
       {/* Mobile Menu Dropdown */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-stone-950/95 backdrop-blur-xl border-b border-stone-800 shadow-2xl overflow-hidden animate-in slide-in-from-top-2 duration-200">
-          <nav className="flex flex-col p-4 gap-2">
-            <Link
-              href="/"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 ${
-                pathname === '/'
-                  ? 'gold-gradient-bg text-stone-950 shadow'
-                  : 'text-stone-300 hover:text-stone-100 hover:bg-stone-800'
-              }`}
-            >
-              <Home className="w-4 h-4" /> Ana Sayfa
-            </Link>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -12, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.96 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="md:hidden absolute top-full left-0 right-0 px-4 pt-2 pb-4 z-50 pointer-events-auto"
+          >
+            <div className="bg-stone-950/95 backdrop-blur-2xl border border-stone-800/80 rounded-3xl shadow-2xl overflow-hidden p-2.5">
+              <nav className="flex flex-col gap-1.5">
+                <Link
+                  href="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-2xl text-sm font-bold transition-all flex items-center gap-3 ${
+                    pathname === '/'
+                      ? 'gold-gradient-bg text-stone-950 shadow-md'
+                      : 'text-stone-300 hover:text-stone-100 hover:bg-stone-900/80'
+                  }`}
+                >
+                  <Home className="w-4 h-4" /> Ana Sayfa
+                </Link>
 
-            <Link
-              href="/menu"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 ${
-                pathname === '/menu'
-                  ? 'gold-gradient-bg text-stone-950 shadow'
-                  : 'text-stone-300 hover:text-stone-100 hover:bg-stone-800'
-              }`}
-            >
-              <ShoppingBag className="w-4 h-4" /> Ürün Kataloğu
-            </Link>
+                <Link
+                  href="/menu"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-2xl text-sm font-bold transition-all flex items-center gap-3 ${
+                    pathname === '/menu'
+                      ? 'gold-gradient-bg text-stone-950 shadow-md'
+                      : 'text-stone-300 hover:text-stone-100 hover:bg-stone-900/80'
+                  }`}
+                >
+                  <ShoppingBag className="w-4 h-4" /> Ürün Kataloğu
+                </Link>
 
-            <Link
-              href="/markalarimiz"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-3 ${
-                pathname === '/markalarimiz'
-                  ? 'gold-gradient-bg text-stone-950 shadow'
-                  : 'text-stone-300 hover:text-stone-100 hover:bg-stone-800'
-              }`}
-            >
-              <Star className="w-4 h-4" /> Markalarımız
-            </Link>
-          </nav>
-        </div>
-      )}
+                <Link
+                  href="/markalarimiz"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-2xl text-sm font-bold transition-all flex items-center gap-3 ${
+                    pathname === '/markalarimiz'
+                      ? 'gold-gradient-bg text-stone-950 shadow-md'
+                      : 'text-stone-300 hover:text-stone-100 hover:bg-stone-900/80'
+                  }`}
+                >
+                  <Star className="w-4 h-4" /> Markalarımız
+                </Link>
+              </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
