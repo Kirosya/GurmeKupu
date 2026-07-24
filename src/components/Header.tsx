@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingBag, Utensils, ShieldCheck, Home, ChefHat } from 'lucide-react';
+import { ShoppingBag, Utensils, ShieldCheck, Home, ChefHat, Star } from 'lucide-react';
 
 interface HeaderProps {
   cartCount?: number;
@@ -43,6 +43,17 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
             }`}
           >
             <Home className="w-3.5 h-3.5" /> Ana Sayfa
+          </Link>
+          
+          <Link
+            href="/markalarimiz"
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              pathname === '/markalarimiz'
+                ? 'gold-gradient-bg text-stone-950 shadow'
+                : 'text-stone-300 hover:text-stone-100 hover:bg-stone-800'
+            }`}
+          >
+            <Star className="w-3.5 h-3.5" /> Markalarımız
           </Link>
 
         </nav>
