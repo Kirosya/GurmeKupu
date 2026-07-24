@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
-import { Utensils, ArrowRight, Scale, ShieldCheck, Sparkles, ChefHat, Clock, Award, Star, Phone, MapPin } from 'lucide-react';
+import { Utensils, ArrowRight, Scale, ShieldCheck, Sparkles, ChefHat, Clock, Award, Star, Phone, MapPin, MessageCircle, Instagram } from 'lucide-react';
 
 export default function LandingHomePage() {
   return (
@@ -25,13 +25,24 @@ export default function LandingHomePage() {
               Düğün, nişan ve özel davetleriniz için özenle hazırlanan ev yemekleri. İhtiyacınız olan lezzeti, tam ihtiyacınız olan kiloda sipariş edin.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Link
-                href="/siparis"
-                className="px-8 py-4 rounded-full gold-gradient-bg text-stone-950 font-bold text-base hover:scale-105 transition-transform flex items-center gap-2"
+              <a
+                href="https://wa.me/905369305151"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 rounded-full bg-green-500 hover:bg-green-600 text-white font-bold text-base hover:scale-105 transition-all flex items-center gap-2 shadow-lg shadow-green-900/20"
               >
-                <span>Siparişe Başla</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp'tan Sipariş Ver</span>
+              </a>
+              <a
+                href="https://www.instagram.com/gurmekupu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:brightness-110 text-white font-bold text-base hover:scale-105 transition-all flex items-center gap-2 shadow-lg shadow-pink-900/20"
+              >
+                <Instagram className="w-5 h-5" />
+                <span>Instagram'dan İncele</span>
+              </a>
             </div>
           </div>
         </section>
