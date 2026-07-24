@@ -50,9 +50,11 @@ export async function POST(req: NextRequest) {
 
     const savedOrder = await createOrderDB(newOrder);
 
-    sendOrderNotifications(savedOrder).catch(err => {
+    try {
+      await sendOrderNotifications(savedOrder);
+    } catch (err) {
       console.error('Bildirim gönderim hatası:', err);
-    });
+    }
 
     return NextResponse.json({
       success: true,
