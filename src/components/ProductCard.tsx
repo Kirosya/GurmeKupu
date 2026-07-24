@@ -4,19 +4,26 @@ import React, { useState } from 'react';
 import { Product, UnitType, OrderItem } from '@/lib/types';
 import { Plus, Check, Scale } from 'lucide-react';
 
-// **metin** → <strong>metin</strong> olarak render eder
+// **metin** → bold, \n → ayrı satır olarak render eder
 function BoldText({ text }: { text: string }) {
-  const parts = text.split(/\*\*(.+?)\*\*/g);
+  const lines = text.split('\n');
   return (
-    <>
-      {parts.map((part, i) =>
-        i % 2 === 1 ? (
-          <strong key={i} className="text-amber-400 font-bold">{part}</strong>
-        ) : (
-          <span key={i}>{part}</span>
-        )
-      )}
-    </>
+    <div className="space-y-1">
+      {lines.map((line, lineIdx) => {
+        const parts = line.split(/\*\*(.+?)\*\*/g);
+        return (
+          <p key={lineIdx} className="text-xs text-stone-400 leading-relaxed">
+            {parts.map((part, i) =>
+              i % 2 === 1 ? (
+                <strong key={i} className="text-amber-400 font-bold">{part}</strong>
+              ) : (
+                <span key={i}>{part}</span>
+              )
+            )}
+          </p>
+        );
+      })}
+    </div>
   );
 }
 
