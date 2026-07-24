@@ -7,62 +7,52 @@ import { MessageCircle, Instagram, ArrowDownRight, Phone, Mail, MapPin, Star } f
 
 const ALL_REVIEWS = [
   {
-    name: 'Mehmet Yılmaz',
-    company: 'Yılmaz Catering',
+    name: 'Mehmet Y***',
     text: 'Toplu siparişlerimizde hiç sorun yaşamadık. Yaprak sarması ve lahana sarması kalitesi tutarlı, her kolide aynı lezzeti buluyoruz. Kesinlikle tavsiye ederim.',
     stars: 5,
   },
   {
-    name: 'Fatma Kaya',
-    company: 'Kaya Yemek Fabrikası',
+    name: 'Fatma K***',
     text: 'İçli köfte ve mantı siparişlerimizi düßeğdük fiyata ve zamanında alıyoruz. -18°C’de raf ömrü bizim için çok kritik, bu konuda hiç sorun çıkmadı.',
     stars: 5,
   },
   {
-    name: 'Ali Demir',
-    company: 'Ankara Toplu Yemek A.Ş.',
+    name: 'Ali D***',
     text: 'Koli bazlı satış sistemi işimizi çok kolaylaştırdı. Minimum sipariş esnekliği sayesinde stok yönetimimiz çok daha verimli hale geldi.',
     stars: 5,
   },
   {
-    name: 'Ayşe Özcan',
-    company: 'Özcan Organizasyon',
+    name: 'Ayşe Ö***',
     text: 'Etkinlik yemeklerimiz için patlıcan dolma ve biber dolma alıyoruz. Misafirlerimizden çok olumlu geri dönüşler alıyoruz. Hizmet kalitesi yüksek.',
     stars: 5,
   },
   {
-    name: 'Hasan Şahin',
-    company: 'Şahin Lojistik Yemek',
+    name: 'Hasan Ş***',
     text: 'Teslimat süreci çok düzgün, paketleme hijyenik. Uzun vadeli iş birliği için doğru adres olduğuna emin olduk.',
     stars: 4,
   },
   {
-    name: 'Zeynep Arslan',
-    company: 'Arslan Mutfak',
+    name: 'Zeynep A***',
     text: 'Gurme Küpü ile çalışmaya başlamadan önce çeşitli firmalar denedik. Tutarlı kalite ve dürüst iletişim açısından bu firmayı çok daha üstün bulduk.',
     stars: 5,
   },
   {
-    name: 'Mustafa Çelik',
-    company: 'Çelik Kurumsal Yemek',
+    name: 'Mustafa Ç***',
     text: 'Menü danışmanlığı hizmetinden de yararlandık, beklentimizin üzzerinde destek aldık. Özellikle lezzet haritası çok işimize yaradı.',
     stars: 5,
   },
   {
-    name: 'Selin Koç',
-    company: 'Koç Okul Yemeği',
+    name: 'Selin K***',
     text: 'Okul kantinimiz için düzenli sipariş veriyoruz. Ürünler çocukların favorisi oldu. Özellikle mantı ve içli köfte çok tutuldu.',
     stars: 5,
   },
   {
-    name: 'Recep Yıldız',
-    company: 'Yıldız Catering Grubu',
+    name: 'Recep Y***',
     text: 'Euro palet düzeyinde toplu sipariş verdik, lojistik süreç çok akıcıydı. Her aşamada bilgilendirme yapıldı, güven veren bir firma.',
     stars: 4,
   },
   {
-    name: 'Hatice Güneş',
-    company: 'Güneş Kurumsal Mutfak',
+    name: 'Hatice G***',
     text: 'B2B modeliyle çalışmak isteyen mutfaklar için ideal bir tedarikçi. Fiyat-kalite dengesi rakiplerine göre çok daha iyi.',
     stars: 5,
   },
@@ -257,7 +247,6 @@ export default function LandingHomePage() {
                   <p className="text-slate-600 leading-relaxed text-sm flex-1">&ldquo;{review.text}&rdquo;</p>
                   <div className="pt-3 border-t border-slate-100">
                     <p className="font-black text-[#0A1A3A] text-sm">{review.name}</p>
-                    <p className="text-xs text-[#D9480F] font-bold mt-0.5">{review.company}</p>
                   </div>
                 </div>
               ))}
