@@ -55,7 +55,7 @@ export default function BrandsPage() {
             </div>
             <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center items-center">
               <div className="w-full max-w-sm">
-                <img src="/logo.png" alt="Gurme Küpü" className="w-full h-auto object-contain hover:scale-105 transition-transform duration-700" />
+                <img src="/gurme-kupu.avif" alt="Gurme Küpü" className="w-full h-auto object-contain hover:scale-105 transition-transform duration-700" />
               </div>
             </div>
           </section>
