@@ -37,7 +37,7 @@ export default function LandingHomePage() {
 
             <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
               <a
-                href={`https://wa.me/905369305151?text=${encodeURIComponent('Merhaba, Gurme Küpü ürünleri hakkında bilgi almak ve sipariş vermek istiyorum.')}`}
+                href={`https://wa.me/905369305151?text=${encodeURIComponent('Merhaba, sipariş bağlantısı almak istiyorum.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 bg-[#0A1A3A] hover:bg-[#163060] text-white px-7 py-4 rounded-2xl font-bold transition-all duration-300 shadow-lg shadow-blue-900/20"
