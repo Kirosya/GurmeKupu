@@ -57,7 +57,7 @@ export default function LandingHomePage() {
                 href="/menu"
                 className="inline-flex items-center gap-3 bg-[#B84C0C] hover:bg-[#9a3d08] text-white px-7 py-4 rounded-2xl font-bold transition-all duration-300"
               >
-                <span>Yemek Menümüzü İncele →</span>
+                <span>Ürün Kataloğumuzu İncele →</span>
               </Link>
             </div>
           </div>

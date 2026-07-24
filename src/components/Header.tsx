@@ -53,7 +53,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
                 : 'text-stone-300 hover:text-stone-100 hover:bg-stone-800'
             }`}
           >
-            Yemek Menüsü
+            Ürün Kataloğu
           </Link>
 
           <Link
