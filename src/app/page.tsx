@@ -19,7 +19,7 @@ export default function LandingHomePage() {
           {/* Arkaplan Resmi */}
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1920&q=80')" }}
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920&q=80')" }}
           ></div>
           {/* Karartma Overlay */}
           <div className="absolute inset-0 bg-stone-950/60"></div>
@@ -116,7 +116,7 @@ export default function LandingHomePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="h-[450px] rounded-3xl overflow-hidden relative group">
-                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80" alt="Odun Fırını Et" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                <img src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1200&q=80" alt="Kuzu Tandır" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent" />
                 <div className="absolute bottom-10 left-10">
                   <span className="px-4 py-1.5 bg-orange-600 text-white text-xs font-bold uppercase tracking-wider rounded-full mb-4 inline-block">İmza Yemeğimiz</span>
@@ -127,7 +127,7 @@ export default function LandingHomePage() {
 
               <div className="grid grid-rows-2 gap-8 h-[450px]">
                 <div className="rounded-3xl overflow-hidden relative group">
-                  <img src="https://images.unsplash.com/photo-1548943487-a2e4f43b4850?auto=format&fit=crop&w=800&q=80" alt="Mezeler" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                  <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" alt="Mezeler" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent" />
                   <div className="absolute bottom-6 left-6">
                     <h3 className="text-2xl font-serif font-bold text-white">Soğuk Mezeler</h3>
@@ -135,7 +135,7 @@ export default function LandingHomePage() {
                   </div>
                 </div>
                 <div className="rounded-3xl overflow-hidden relative group">
-                  <img src="https://images.unsplash.com/photo-1556910103-1c02745a872f?auto=format&fit=crop&w=800&q=80" alt="Ana Yemekler" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                  <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80" alt="Tencere Yemekleri" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent" />
                   <div className="absolute bottom-6 left-6">
                     <h3 className="text-2xl font-serif font-bold text-white">Tencere Yemekleri</h3>

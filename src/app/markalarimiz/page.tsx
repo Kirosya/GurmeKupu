@@ -17,7 +17,7 @@ export default function BrandsPage() {
         <section className="relative w-full h-[50vh] min-h-[400px] flex items-center justify-center">
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=1920&q=80')" }}
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=1920&q=80')" }}
           ></div>
           <div className="absolute inset-0 bg-stone-900/70"></div>
           
