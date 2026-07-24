@@ -53,6 +53,12 @@ export default function LandingHomePage() {
                 <Instagram className="w-5 h-5" />
                 <span>Instagram</span>
               </a>
+              <Link
+                href="/menu"
+                className="inline-flex items-center gap-3 bg-[#B84C0C] hover:bg-[#9a3d08] text-white px-7 py-4 rounded-2xl font-bold transition-all duration-300"
+              >
+                <span>Yemek Menümüzü İncele →</span>
+              </Link>
             </div>
           </div>
 
@@ -100,7 +106,6 @@ export default function LandingHomePage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/10 to-transparent" />
             <div className="absolute bottom-8 left-8 right-8">
-              <span className="text-[#F5A623] text-xs font-bold uppercase tracking-widest">İmza Yemeğimiz</span>
               <h3 className="text-3xl font-black text-white mt-1">Kuzu Tandır</h3>
               <p className="text-stone-300 text-sm mt-2 leading-relaxed">Taş fırında saatlerce, lokum kıvamına gelinceye dek pişirilir.</p>
             </div>
