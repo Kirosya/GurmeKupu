@@ -37,7 +37,7 @@ export default function LandingHomePage() {
 
             <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
               <a
-                href="https://wa.me/905369305151"
+                href={`https://wa.me/905369305151?text=${encodeURIComponent('Merhaba, Gurme Küpü ürünleri hakkında bilgi almak ve sipariş vermek istiyorum.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 bg-[#0A1A3A] hover:bg-[#163060] text-white px-7 py-4 rounded-2xl font-bold transition-all duration-300 shadow-lg shadow-blue-900/20"
@@ -206,7 +206,7 @@ export default function LandingHomePage() {
               Geçin.
             </h2>
             <div className="space-y-5">
-              <a href="https://wa.me/905369305151" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+              <a href={`https://wa.me/905369305151?text=${encodeURIComponent('Merhaba, Gurme Küpü ürünleri hakkında bilgi almak ve sipariş vermek istiyorum.')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                 <div className="w-12 h-12 rounded-2xl bg-green-500 text-white flex items-center justify-center flex-shrink-0 shadow-lg shadow-green-500/30 group-hover:scale-110 transition-transform">
                   <MessageCircle className="w-5 h-5" />
                 </div>
@@ -251,7 +251,7 @@ export default function LandingHomePage() {
               Ürün kataloğu, fiyat teklifi veya özel sipariş talepleriniz için WhatsApp üzerinden bize ulaşın. En kısa sürede dönüş sağlayacağız.
             </p>
             <a
-              href="https://wa.me/905369305151"
+              href={`https://wa.me/905369305151?text=${encodeURIComponent('Merhaba, Gurme Küpü ürünleri hakkında bilgi almak ve sipariş vermek istiyorum.')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-3 bg-white text-[#D9480F] px-8 py-4 rounded-2xl font-black text-lg transition-all hover:scale-105 shadow-lg"
