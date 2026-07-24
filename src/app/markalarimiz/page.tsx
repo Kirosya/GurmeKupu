@@ -55,7 +55,7 @@ export default function BrandsPage() {
             </div>
             <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center items-center">
               <div className="w-full max-w-sm">
-                <img src="/Gurme Küpü.avif" alt="Gurme Küpü" className="w-full h-auto object-contain hover:scale-105 transition-transform duration-700" />
+                <img src="/gurme-kupu.avif" alt="Gurme Küpü" className="w-full h-auto object-contain hover:scale-105 transition-transform duration-700" />
               </div>
             </div>
           </section>
@@ -64,7 +64,7 @@ export default function BrandsPage() {
           <section className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 bg-white p-8 md:p-12 rounded-[3rem] shadow-xl shadow-orange-900/5">
             <div className="w-full lg:w-1/2 flex justify-center items-center">
               <div className="w-full max-w-sm">
-                <img src="/GK Gurme Destek.avif" alt="Gurme Destek" className="w-full h-auto object-contain hover:scale-105 transition-transform duration-700" />
+                <img src="/gk-gurme-destek.avif" alt="Gurme Destek" className="w-full h-auto object-contain hover:scale-105 transition-transform duration-700" />
               </div>
             </div>
             <div className="w-full lg:w-1/2">
@@ -107,7 +107,7 @@ export default function BrandsPage() {
             </div>
             <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center items-center">
               <div className="w-full max-w-sm">
-                <img src="/GK Gurme Akademi.avif" alt="Gurme Akademi" className="w-full h-auto object-contain hover:scale-105 transition-transform duration-700" />
+                <img src="/gk-gurme-akademi.avif" alt="Gurme Akademi" className="w-full h-auto object-contain hover:scale-105 transition-transform duration-700" />
               </div>
             </div>
           </section>
