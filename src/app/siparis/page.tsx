@@ -6,7 +6,7 @@ import { Header } from '@/components/Header';
 import { ProductCard } from '@/components/ProductCard';
 import { CartDrawer } from '@/components/CartDrawer';
 import { OrderSuccessModal } from '@/components/OrderSuccessModal';
-import { Sparkles, ChefHat, HeartHandshake, Utensils } from 'lucide-react';
+import { Sparkles, ChefHat, HeartHandshake, Utensils, ShoppingBag } from 'lucide-react';
 
 export default function SiparisPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -127,6 +127,20 @@ export default function SiparisPage() {
           </div>
         )}
 
+        {/* En Alt Sepeti Gör Butonu */}
+        <div className="pt-6 flex flex-col items-center justify-center">
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="w-full sm:w-auto min-w-[280px] px-8 py-4 rounded-2xl gold-gradient-bg text-stone-950 font-black text-base shadow-xl shadow-amber-900/40 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-3 border border-amber-400/40 group"
+          >
+            <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            <span>SEPETİ GÖR</span>
+            <span className="bg-stone-950 text-amber-400 text-xs font-black px-3 py-1 rounded-full border border-amber-500/50 ml-1">
+              {cartItems.length} Ürün
+            </span>
+          </button>
+        </div>
+
       </main>
 
       {/* Modern Footer */}
@@ -157,6 +171,24 @@ export default function SiparisPage() {
         orderId={successOrderId}
         onClose={() => setSuccessOrderId(null)}
       />
+
+      {/* Floating Bottom Cart Bar for Mobile */}
+      {cartItems.length > 0 && (
+        <div className="fixed bottom-4 left-4 right-4 z-40 sm:hidden">
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="w-full py-3.5 px-6 rounded-2xl gold-gradient-bg text-stone-950 font-black text-sm shadow-2xl shadow-amber-950/80 border border-amber-400/50 flex items-center justify-between active:scale-95 transition-all"
+          >
+            <div className="flex items-center gap-2.5">
+              <ShoppingBag className="w-5 h-5" />
+              <span>SEPETİ GÖR</span>
+            </div>
+            <span className="bg-stone-950 text-amber-400 text-xs font-black px-3 py-1 rounded-full border border-amber-500">
+              {cartItems.length} Ürün
+            </span>
+          </button>
+        </div>
+      )}
 
     </div>
   );
