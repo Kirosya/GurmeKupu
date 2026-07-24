@@ -4,7 +4,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-1',
     name: 'Gurme Yaprak Sarma',
-    description: 'Taze asma yaprağına sarılmış, özenle hazırlanmış geleneksel yaprak sarması. Ambalaj: 10 kg / koli. Paket türü: Tencere. (18-22g / adet)',
+    description: 'Paket Türü: Tencere | Koli Ağırlığı: 10 kg | Adet Ağırlığı: 18-22 g / adet | Raf Ömrü: +4°C\'de 7 gün | Saklama Koşulları: Buzdolabında saklayınız. Taze tüketim önerilir.',
     category: 'Zeytinyağlılar & Meze',
     pricePerKg: 350,
     image: 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80',
@@ -13,7 +13,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-2',
     name: 'Gurme Lahana Sarma',
-    description: 'Taze lahana yaprağına sarılmış, kavrulmuş iç harçla hazırlanan geleneksel lahana sarması. Ambalaj: 10 kg / koli. Paket türü: Tencere. (35g / adet)',
+    description: 'Paket Türü: Tencere | Koli Ağırlığı: 10 kg | Adet Ağırlığı: 35 g / adet | Raf Ömrü: +4°C\'de 7 gün | Saklama Koşulları: Buzdolabında saklayınız. Taze tüketim önerilir.',
     category: 'Zeytinyağlılar & Meze',
     pricePerKg: 320,
     image: 'https://images.unsplash.com/photo-1594966779836-7c00e1672322?auto=format&fit=crop&w=800&q=80',
@@ -22,7 +22,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-3',
     name: 'Gurme Patlıcan Dolma',
-    description: 'Özenle seçilmiş patlıcanlara doldurulan, kavrulmuş iç harçla hazırlanan geleneksel lezzet. Ambalaj: 10 kg / koli. Paket türü: Tencere. (40g / adet)',
+    description: 'Paket Türü: Tencere | Koli Ağırlığı: 10 kg | Adet Ağırlığı: 40 g / adet | Raf Ömrü: +4°C\'de 7 gün | Saklama Koşulları: Buzdolabında saklayınız. Taze tüketim önerilir.',
     category: 'Zeytinyağlılar & Meze',
     pricePerKg: 380,
     image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80',
@@ -31,7 +31,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-4',
     name: 'Gurme Biber Dolma',
-    description: 'Yeşil biberlere özel iç harçla doldurulan, profesyonel mutfaklar için hazır sunum kalitesinde ürün. Ambalaj: 10 kg / koli. Paket türü: Tencere. (25g / adet)',
+    description: 'Paket Türü: Tencere | Koli Ağırlığı: 10 kg | Adet Ağırlığı: 25 g / adet | Raf Ömrü: +4°C\'de 7 gün | Saklama Koşulları: Buzdolabında saklayınız. Taze tüketim önerilir.',
     category: 'Zeytinyağlılar & Meze',
     pricePerKg: 340,
     image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=800&q=80',
@@ -40,7 +40,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-5',
     name: 'Gurme Çiğköfte',
-    description: 'Vakumlu paketlerde taze hazırlanan, toplu tüketim için uygun çiğköfte. Ambalaj: 5 kg / koli (10 poşet). Paket türü: Vakumlu poşet.',
+    description: 'Ambalaj Türü: Vakumlu poşet | Koli Ağırlığı: 5 kg | Koli İçeriği: 5 × 2 poşet | Raf Ömrü: +4°C\'de 7 gün | Palet Bilgisi: Euro palet 120 × 80 cm, toplam ürün ağırlığı 640 kg | Saklama Koşulları: Ürünleri uygun koşullarda saklayınız; tazelik ve kalite için önerilen koşullara uyunuz.',
     category: 'Zeytinyağlılar & Meze',
     pricePerKg: 250,
     image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80',
@@ -48,8 +48,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: 'prod-6',
-    name: 'Gurme İçli Köfte (-18°C)',
-    description: 'Özenle hazırlanmış geleneksel içli köfte. Ambalaj: 10 kg / koli. Adet: 250 adet/koli. Raf ömrü: 12 ay (-18°C). (Euro palet 120x80cm toplam ürün ağırlık 640kg)',
+    name: 'Gurme İçli Köfte',
+    description: 'Koli Ağırlığı: 10 kg | Koli İçeriği: 250 adet | Raf Ömrü: -18°C\'de 12 ay | Palet Bilgisi: Euro palet 120 × 80 cm, toplam ürün ağırlığı 640 kg | Saklama Koşulları: Derin dondurucuda saklayınız; çözülmüş ürünü tekrar dondurmayınız.',
     category: 'Zeytinyağlılar & Meze',
     pricePerKg: 420,
     image: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=800&q=80',
@@ -57,8 +57,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: 'prod-7',
-    name: 'Gurme Mantı (-18°C)',
-    description: 'Özenle yoğrulmuş ince hamur içinde geleneksel etli mantı. Ambalaj: 10 kg / koli. Raf ömrü: 12 ay (-18°C).',
+    name: 'Gurme Mantı',
+    description: 'Koli Ağırlığı: 10 kg | Raf Ömrü: Derin dondurucuda (-18°C) 12 ay | Saklama Koşulları: Ürünleri derin dondurucuda muhafaza ediniz. Çözüldükten sonra tekrar dondurmayınız.',
     category: 'Börek & Mantı',
     pricePerKg: 480,
     image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
