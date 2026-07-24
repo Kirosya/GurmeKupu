@@ -283,7 +283,7 @@ export default function LandingHomePage() {
             <Link href="/menu" className="hover:text-[#D9480F] transition-colors">Ürün Kataloğu</Link>
             <Link href="/markalarimiz" className="hover:text-[#D9480F] transition-colors">Markalarımız</Link>
           </div>
-          <p className="font-medium">© 2026 Gurme Küpü. Tüm hakları saklıdır.</p>
+          <p className="font-medium text-slate-400">Ankara · Etimesgut</p>
         </div>
       </footer>
 
