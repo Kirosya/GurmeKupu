@@ -116,7 +116,6 @@ export default function LandingHomePage() {
 
           <div className="flex items-center gap-6">
             <Link href="/" className="hover:text-amber-400 transition-colors">Ana Sayfa</Link>
-            <Link href="/siparis" className="hover:text-amber-400 transition-colors font-bold text-amber-400">Sipariş Ver (/siparis)</Link>
             <Link href="/admin" className="hover:text-amber-400 transition-colors">Admin Girişi</Link>
           </div>
 

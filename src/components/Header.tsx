@@ -45,16 +45,6 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
             <Home className="w-3.5 h-3.5" /> Ana Sayfa
           </Link>
 
-          <Link
-            href="/siparis"
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-              pathname === '/siparis'
-                ? 'gold-gradient-bg text-stone-950 shadow'
-                : 'text-amber-400 hover:bg-stone-800'
-            }`}
-          >
-            <ChefHat className="w-3.5 h-3.5" /> Sipariş Oluştur
-          </Link>
         </nav>
 
         {/* Navigation Actions */}
@@ -84,14 +74,6 @@ export const Header: React.FC<HeaderProps> = ({ cartCount = 0, onOpenCart }) => 
                 </span>
               )}
             </button>
-          ) : (
-            <Link
-              href="/siparis"
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl gold-gradient-bg text-stone-950 font-bold text-sm shadow-lg shadow-amber-900/30 hover:brightness-110 active:scale-95 transition-all"
-            >
-              <ShoppingBag className="w-5 h-5" />
-              <span>Sipariş Ver</span>
-            </Link>
           )}
 
         </div>
