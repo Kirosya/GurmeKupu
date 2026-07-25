@@ -160,34 +160,26 @@ export default function SiparisPage() {
         onClose={() => setSuccessOrderId(null)}
       />
 
-      {/* Floating Sticky Bottom Cart Bar (Always fixed at bottom of screen when cart has items) */}
+      {/* Floating Sticky Bottom Cart Button (Fixed at bottom-5, centered horizontally) */}
       {cartItems.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 p-3.5 sm:p-4 bg-stone-950/95 backdrop-blur-xl border-t border-amber-500/30 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] transition-all">
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-2 sm:px-6">
+        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-md">
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="w-full py-4 px-6 rounded-2xl gold-gradient-bg text-stone-950 font-black text-sm sm:text-base shadow-2xl shadow-amber-950/90 border border-amber-400/50 flex items-center justify-between hover:brightness-110 active:scale-95 transition-all"
+          >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl gold-gradient-bg flex items-center justify-center text-stone-950 shrink-0 font-bold">
-                <ShoppingBag className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs text-stone-400 font-semibold">
-                  Sepetinizde <span className="text-amber-400 font-black">{cartItems.length} ürün</span> var
-                </p>
-                <p className="text-sm sm:text-base font-black text-amber-400">
-                  Toplam: {cartTotalPrice.toLocaleString('tr-TR', { maximumFractionDigits: 2 })} ₺
-                </p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="px-6 py-3 sm:py-3.5 rounded-xl gold-gradient-bg text-stone-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-950/80 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2 border border-amber-400/40 shrink-0 group"
-            >
+              <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
               <span>SEPETİ GÖR</span>
-              <span className="bg-stone-950 text-amber-400 text-xs font-black px-2.5 py-0.5 rounded-full border border-amber-500/50">
-                {cartItems.length}
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs sm:text-sm font-extrabold text-stone-900">
+                {cartTotalPrice.toLocaleString('tr-TR', { maximumFractionDigits: 2 })} ₺
               </span>
-            </button>
-          </div>
+              <span className="bg-stone-950 text-amber-400 text-xs sm:text-sm font-black px-3 py-1 rounded-full border border-amber-500">
+                {cartItems.length} Ürün
+              </span>
+            </div>
+          </button>
         </div>
       )}
 
