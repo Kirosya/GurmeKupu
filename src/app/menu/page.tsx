@@ -1,103 +1,36 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from '@/components/Header';
 import Link from 'next/link';
-import { MessageCircle, Thermometer, Package, Clock } from 'lucide-react';
-
-type StorageType = 'frozen' | 'fresh';
-
-interface Product {
-  name: string;
-  description: string;
-  storage: StorageType;
-  boxWeight: string;
-  unitWeight?: string;
-  shelfLife: string;
-  storageCondition: string;
-  packageType?: string;
-  image: string;
-}
-
-const products: Product[] = [
-  {
-    name: 'Gurme İçli Köfte',
-    description: 'Geleneksel tarifle hazırlanan, dış kabuğu ince ve çıtır, iç harcı lezzetli içli köfte. Koli başına 250 adet.',
-    storage: 'frozen',
-    boxWeight: '10 kg / koli',
-    shelfLife: '12 ay (-18°C)',
-    storageCondition: 'Derin dondurucuda saklayınız. Çözülmüş ürünü tekrar dondurmayınız.',
-    image: 'https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: 'Gurme Yaprak Sarma',
-    description: 'Taze asma yaprağına sarılmış, özenle hazırlanmış geleneksel yaprak sarması. Taze tüketim önerilir.',
-    storage: 'fresh',
-    boxWeight: '10 kg / koli',
-    unitWeight: '18–22 g / adet',
-    packageType: 'Tencere',
-    shelfLife: '7 gün (+4°C)',
-    storageCondition: 'Buzdolabında saklayınız.',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: 'Gurme Lahana Sarma',
-    description: 'Taze lahana yaprağına sarılmış, kavrulmuş iç harçla hazırlanan geleneksel lahana sarması.',
-    storage: 'fresh',
-    boxWeight: '10 kg / koli',
-    unitWeight: '35 g / adet',
-    packageType: 'Tencere',
-    shelfLife: '7 gün (+4°C)',
-    storageCondition: 'Buzdolabında saklayınız.',
-    image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: 'Gurme Patlıcan Dolma',
-    description: 'Özenle seçilmiş patlıcanlara doldurulan, kavrulmuş iç harçla hazırlanan geleneksel lezzet.',
-    storage: 'fresh',
-    boxWeight: '10 kg / koli',
-    unitWeight: '40 g / adet',
-    packageType: 'Tencere',
-    shelfLife: '7 gün (+4°C)',
-    storageCondition: 'Buzdolabında saklayınız.',
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: 'Gurme Biber Dolma',
-    description: 'Yeşil biberlere özel iç harçla doldurulan, profesyonel mutfaklar için hazır sunum kalitesinde ürün.',
-    storage: 'fresh',
-    boxWeight: '10 kg / koli',
-    unitWeight: '25 g / adet',
-    packageType: 'Tencere',
-    shelfLife: '7 gün (+4°C)',
-    storageCondition: 'Buzdolabında saklayınız.',
-    image: 'https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: 'Gurme Mantı',
-    description: 'İnce açılmış hamurla yapılan, kaliteli kıyma harcıyla doldurulmuş geleneksel Türk mantısı.',
-    storage: 'frozen',
-    boxWeight: '10 kg / koli',
-    shelfLife: '12 ay (-18°C)',
-    storageCondition: 'Derin dondurucuda muhafaza ediniz. Çözüldükten sonra tekrar dondurmayınız.',
-    image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: 'Gurme Çiğköfte',
-    description: 'Vakumlu paketlerde taze hazırlanan, toplu tüketim için uygun çiğköfte. Koli başına 10 poşet.',
-    storage: 'fresh',
-    boxWeight: '5 kg / koli',
-    packageType: 'Vakumlu poşet',
-    shelfLife: '7 gün (+4°C)',
-    storageCondition: 'Uygun koşullarda saklayınız; tazelik ve kalite için önerilen koşullara uyunuz.',
-    image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80',
-  },
-];
+import { MessageCircle, Package, Utensils } from 'lucide-react';
+import { Product } from '@/lib/types';
 
 export default function MenuPage() {
-  const [filter, setFilter] = useState<'all' | 'frozen' | 'fresh'>('all');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filter, setFilter] = useState<string>('all');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const filtered = filter === 'all' ? products : products.filter(p => p.storage === filter);
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const res = await fetch('/api/products');
+        const data = await res.json();
+        if (data.success && data.products) {
+          setProducts(data.products);
+        }
+      } catch (err) {
+        console.error('Products load error:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadProducts();
+  }, []);
+
+  const categories = ['all', ...Array.from(new Set(products.map(p => p.category)))];
+
+  const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
 
   return (
     <div className="min-h-screen bg-[#F5F0E8] text-stone-900 flex flex-col font-sans">
@@ -108,15 +41,15 @@ export default function MenuPage() {
         {/* BAŞLIK */}
         <section className="bg-stone-900 text-white py-20 px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-stone-400 mb-3">2026 – 2027 Sezonu</p>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-stone-400 mb-3">Gurme Lezzetler</p>
             <h1 className="text-5xl sm:text-6xl font-black leading-tight">
-              Ürün <span className="text-[#B84C0C]">Kataloğumuz</span>
+              Menü & <span className="text-[#B84C0C]">Kataloğumuz</span>
             </h1>
             <p className="text-stone-400 mt-5 max-w-2xl mx-auto text-lg font-light leading-relaxed">
-              Catering firmaları, toplu yemek üreticileri ve profesyonel mutfaklar için hazırlanmış, koli bazında sipariş edilebilen ürünlerimiz.
+              Profesyonel mutfaklar, toplu tüketim ve gurme damaklar için özenle hazırlanan zengin içerikli menümüz.
             </p>
             <p className="text-stone-500 mt-3 text-sm">
-              Fiyat bilgisi ve toplu sipariş teklifi için WhatsApp üzerinden ulaşın.
+              Siparişleriniz veya özel istekleriniz için bizimle iletişime geçebilirsiniz.
             </p>
             <a
               href="https://wa.me/905369305151"
@@ -125,29 +58,25 @@ export default function MenuPage() {
               className="mt-8 inline-flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all hover:scale-105"
             >
               <MessageCircle className="w-5 h-5" />
-              Teklif & Sipariş Bağlantısı Al
+              Sipariş & Bilgi İçin WhatsApp
             </a>
           </div>
         </section>
 
         {/* FİLTRE */}
         <section className="sticky top-[80px] z-30 bg-[#F5F0E8] border-b border-stone-200 py-4 px-4">
-          <div className="flex items-center justify-center gap-3">
-            {[
-              { key: 'all', label: 'Tüm Ürünler' },
-              { key: 'fresh', label: '🧊 Taze (+4°C)' },
-              { key: 'frozen', label: '❄️ Derin Donmuş (-18°C)' },
-            ].map((f) => (
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {categories.map((cat) => (
               <button
-                key={f.key}
-                onClick={() => setFilter(f.key as typeof filter)}
+                key={cat}
+                onClick={() => setFilter(cat)}
                 className={`px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-all ${
-                  filter === f.key
+                  filter === cat
                     ? 'bg-stone-900 text-white'
                     : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
                 }`}
               >
-                {f.label}
+                {cat === 'all' ? 'Tüm Ürünler' : cat}
               </button>
             ))}
           </div>
@@ -155,69 +84,84 @@ export default function MenuPage() {
 
         {/* ÜRÜN KARTLARI */}
         <section className="max-w-7xl mx-auto px-4 sm:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {filtered.map((product) => (
-              <div key={product.name} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 hover:shadow-xl transition-all duration-300 flex flex-col">
-                
-                {/* Görsel */}
-                <div className="relative h-52 overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                  />
-                  {/* Saklama Tipi Badge */}
-                  <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 ${
-                    product.storage === 'frozen'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-emerald-600 text-white'
-                  }`}>
-                    <Thermometer className="w-3 h-3" />
-                    {product.storage === 'frozen' ? '-18°C Derin Donmuş' : '+4°C Taze'}
-                  </div>
-                </div>
-
-                {/* İçerik */}
-                <div className="p-6 flex flex-col flex-1">
-                  <h2 className="text-xl font-black text-stone-900">{product.name}</h2>
-                  <p className="text-stone-500 text-sm mt-2 leading-relaxed flex-1">{product.description}</p>
-
-                  {/* Detaylar */}
-                  <div className="mt-5 space-y-2 border-t border-stone-100 pt-4">
-                    <div className="flex items-center gap-2 text-sm">
-                      <Package className="w-4 h-4 text-[#B84C0C] flex-shrink-0" />
-                      <span className="text-stone-500 font-medium">Ambalaj:</span>
-                      <span className="text-stone-800 font-bold">{product.boxWeight}</span>
-                    </div>
-                    {product.unitWeight && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <Package className="w-4 h-4 text-[#B84C0C] flex-shrink-0" />
-                        <span className="text-stone-500 font-medium">Adet ağırlığı:</span>
-                        <span className="text-stone-800 font-bold">{product.unitWeight}</span>
+          {isLoading ? (
+            <div className="flex items-center justify-center py-20 text-stone-500">
+              Menü yükleniyor...
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+              {filtered.map((product) => (
+                <div key={product.id} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 hover:shadow-xl transition-all duration-300 flex flex-col relative">
+                  
+                  {/* Görsel */}
+                  <div className="relative h-52 overflow-hidden bg-stone-100">
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-stone-300">
+                        <Utensils className="w-12 h-12" />
                       </div>
                     )}
-                    {product.packageType && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <Package className="w-4 h-4 text-[#B84C0C] flex-shrink-0" />
-                        <span className="text-stone-500 font-medium">Paket türü:</span>
-                        <span className="text-stone-800 font-bold">{product.packageType}</span>
+                    
+                    {/* Durum Badge */}
+                    {!product.isAvailable && (
+                      <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-bold bg-red-600 text-white shadow-md">
+                        Geçici Olarak Temin Edilemiyor
                       </div>
                     )}
-                    <div className="flex items-center gap-2 text-sm">
-                      <Clock className="w-4 h-4 text-[#B84C0C] flex-shrink-0" />
-                      <span className="text-stone-500 font-medium">Raf ömrü:</span>
-                      <span className="text-stone-800 font-bold">{product.shelfLife}</span>
-                    </div>
                   </div>
 
-                  {/* Saklama notu */}
-                  <p className="mt-3 text-xs text-stone-400 bg-stone-50 rounded-xl px-3 py-2 leading-relaxed">
-                    ⚠️ {product.storageCondition}
-                  </p>
+                  {/* İçerik */}
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex justify-between items-start gap-2">
+                      <h2 className="text-xl font-black text-stone-900 leading-tight">{product.name}</h2>
+                      <span className="text-[#B84C0C] font-black text-lg whitespace-nowrap">{product.pricePerKg} ₺</span>
+                    </div>
+                    <p className="text-stone-500 text-sm mt-3 leading-relaxed flex-1">
+                      {product.description || 'Bu ürün için henüz açıklama girilmemiş.'}
+                    </p>
+
+                    {/* Detaylar */}
+                    <div className="mt-5 space-y-2 border-t border-stone-100 pt-4">
+                      <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center gap-2">
+                          <Package className="w-4 h-4 text-[#B84C0C] flex-shrink-0" />
+                          <span className="text-stone-500 font-medium">Kategori:</span>
+                        </div>
+                        <span className="text-stone-800 font-bold bg-stone-100 px-3 py-1 rounded-lg text-xs">{product.category}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm mt-2">
+                        <span className="text-stone-500 font-medium ml-6">Birim:</span>
+                        <span className="text-stone-800 font-bold">Kilogram (kg)</span>
+                      </div>
+                    </div>
+
+                    <Link 
+                      href="/siparis" 
+                      className={`mt-6 w-full py-3 rounded-xl font-bold text-center transition-colors text-sm ${
+                        product.isAvailable 
+                          ? 'bg-stone-900 text-white hover:bg-stone-800' 
+                          : 'bg-stone-200 text-stone-400 pointer-events-none'
+                      }`}
+                    >
+                      {product.isAvailable ? 'Sipariş Ekranına Git' : 'Tükendi'}
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+          
+          {/* Boş Durum */}
+          {!isLoading && filtered.length === 0 && (
+            <div className="text-center py-20 text-stone-500">
+              Bu kategoride henüz ürün bulunmamaktadır.
+            </div>
+          )}
 
           {/* CTA */}
           <div className="mt-16 bg-stone-900 text-white rounded-3xl p-8 sm:p-12 text-center">
