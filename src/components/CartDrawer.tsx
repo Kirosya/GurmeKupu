@@ -106,7 +106,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       >
         <div
           className="w-full max-w-md bg-[#1a1a1a] rounded-2xl overflow-hidden flex flex-col shadow-2xl"
-          style={{ maxHeight: '100dvh' }}
+          style={{ maxHeight: '95dvh' }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
