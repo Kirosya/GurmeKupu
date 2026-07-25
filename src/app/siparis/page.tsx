@@ -48,8 +48,10 @@ export default function SiparisPage() {
     setCartItems(prev => prev.filter((_, i) => i !== index));
   };
 
+  const cartTotalPrice = cartItems.reduce((sum, item) => sum + (item.itemTotalPrice || 0), 0);
+
   return (
-    <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col justify-between selection:bg-amber-500 selection:text-stone-950">
+    <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col justify-between selection:bg-amber-500 selection:text-stone-950 relative">
       
       {/* Sticky Header */}
       <Header
@@ -57,7 +59,7 @@ export default function SiparisPage() {
         onOpenCart={() => setIsCartOpen(true)}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+      <main className={`flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 ${cartItems.length > 0 ? 'pb-28' : 'pb-12'}`}>
         
         {/* Hero Section */}
         <div className="relative rounded-3xl overflow-hidden glass-panel p-8 sm:p-12 border border-amber-900/30 shadow-2xl">
@@ -65,7 +67,7 @@ export default function SiparisPage() {
           
           <div className="max-w-2xl space-y-4 relative z-10">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-950/80 border border-amber-500/40 text-amber-400 text-xs font-extrabold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" /> Canlı Sipariş Olşturma Paneli
+              <Sparkles className="w-3.5 h-3.5" /> Canlı Sipariş Oluşturma Paneli
             </span>
             
             <h2 className="text-3xl sm:text-5xl font-black text-stone-100 leading-tight">
@@ -127,20 +129,6 @@ export default function SiparisPage() {
           </div>
         )}
 
-        {/* En Alt Sepeti Gör Butonu */}
-        <div className="pt-6 flex flex-col items-center justify-center">
-          <button
-            onClick={() => setIsCartOpen(true)}
-            className="w-full sm:w-auto min-w-[280px] px-8 py-4 rounded-2xl gold-gradient-bg text-stone-950 font-black text-base shadow-xl shadow-amber-900/40 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-3 border border-amber-400/40 group"
-          >
-            <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            <span>SEPETİ GÖR</span>
-            <span className="bg-stone-950 text-amber-400 text-xs font-black px-3 py-1 rounded-full border border-amber-500/50 ml-1">
-              {cartItems.length} Ürün
-            </span>
-          </button>
-        </div>
-
       </main>
 
       {/* Modern Footer */}
@@ -172,21 +160,34 @@ export default function SiparisPage() {
         onClose={() => setSuccessOrderId(null)}
       />
 
-      {/* Floating Sticky Bottom Cart Bar (Always visible on all screens when cart has items) */}
+      {/* Floating Sticky Bottom Cart Bar (Always fixed at bottom of screen when cart has items) */}
       {cartItems.length > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-md">
-          <button
-            onClick={() => setIsCartOpen(true)}
-            className="w-full py-4 px-6 rounded-2xl gold-gradient-bg text-stone-950 font-black text-sm sm:text-base shadow-2xl shadow-amber-950/90 border border-amber-400/50 flex items-center justify-between hover:brightness-110 active:scale-95 transition-all"
-          >
+        <div className="fixed bottom-0 left-0 right-0 z-50 p-3.5 sm:p-4 bg-stone-950/95 backdrop-blur-xl border-t border-amber-500/30 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] transition-all">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-2 sm:px-6">
             <div className="flex items-center gap-3">
-              <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
-              <span>SEPETİ GÖR</span>
+              <div className="w-10 h-10 rounded-xl gold-gradient-bg flex items-center justify-center text-stone-950 shrink-0 font-bold">
+                <ShoppingBag className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-xs text-stone-400 font-semibold">
+                  Sepetinizde <span className="text-amber-400 font-black">{cartItems.length} ürün</span> var
+                </p>
+                <p className="text-sm sm:text-base font-black text-amber-400">
+                  Toplam: {cartTotalPrice.toLocaleString('tr-TR', { maximumFractionDigits: 2 })} ₺
+                </p>
+              </div>
             </div>
-            <span className="bg-stone-950 text-amber-400 text-xs sm:text-sm font-black px-3.5 py-1.5 rounded-full border border-amber-500">
-              {cartItems.length} Ürün
-            </span>
-          </button>
+
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="px-6 py-3 sm:py-3.5 rounded-xl gold-gradient-bg text-stone-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-950/80 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2 border border-amber-400/40 shrink-0 group"
+            >
+              <span>SEPETİ GÖR</span>
+              <span className="bg-stone-950 text-amber-400 text-xs font-black px-2.5 py-0.5 rounded-full border border-amber-500/50">
+                {cartItems.length}
+              </span>
+            </button>
+          </div>
         </div>
       )}
 
