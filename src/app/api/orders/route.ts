@@ -5,9 +5,22 @@ import { Order, OrderItem } from '@/lib/types';
 
 export const runtime = 'edge';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
     const orders = await getOrdersDB();
+
+    if (id) {
+      const order = orders.find(o => o.id === id);
+      if (order) {
+        return NextResponse.json({ success: true, order });
+      } else {
+        return NextResponse.json({ success: false, error: 'Sipariş bulunamadı' }, { status: 404 });
+      }
+    }
+
     return NextResponse.json({ success: true, orders });
   } catch (error) {
     console.error('API /api/orders GET error:', error);

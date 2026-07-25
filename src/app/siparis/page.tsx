@@ -6,7 +6,7 @@ import { Header } from '@/components/Header';
 import { ProductCard } from '@/components/ProductCard';
 import { CartDrawer } from '@/components/CartDrawer';
 import { OrderSuccessModal } from '@/components/OrderSuccessModal';
-import { Sparkles, ChefHat, HeartHandshake, Utensils, ShoppingBag } from 'lucide-react';
+import { Sparkles, ChefHat, HeartHandshake, Utensils, ShoppingBag, Clock } from 'lucide-react';
 
 export default function SiparisPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -15,6 +15,8 @@ export default function SiparisPage() {
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [successOrderId, setSuccessOrderId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [activeOrderStatus, setActiveOrderStatus] = useState<string | null>(null);
+  const [activeOrderData, setActiveOrderData] = useState<any>(null);
 
   useEffect(() => {
     async function loadProducts() {
@@ -31,6 +33,34 @@ export default function SiparisPage() {
       }
     }
     loadProducts();
+  }, []);
+
+  useEffect(() => {
+    async function checkActiveOrder() {
+      const activeOrderId = localStorage.getItem('activeOrderId');
+      if (activeOrderId) {
+        try {
+          const res = await fetch(`/api/orders?id=${activeOrderId}`);
+          const data = await res.json();
+          if (data.success && data.order) {
+            if (data.order.status === 'DELIVERED') {
+              localStorage.removeItem('activeOrderId');
+              setActiveOrderStatus(null);
+            } else {
+              setActiveOrderStatus(data.order.status);
+              setActiveOrderData(data.order);
+            }
+          } else {
+            localStorage.removeItem('activeOrderId');
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+    checkActiveOrder();
+    const interval = setInterval(checkActiveOrder, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   // Kategoriler
@@ -71,6 +101,26 @@ export default function SiparisPage() {
 
       <main className={`flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 ${cartItems.length > 0 ? 'pb-28' : 'pb-12'}`}>
         
+        {/* Active Order Banner */}
+        {activeOrderStatus === 'PENDING' && (
+          <div className="bg-amber-500/10 border border-amber-500/40 rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
+                <Clock className="w-6 h-6 text-amber-500 animate-pulse" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-amber-400">Siparişiniz Hazırlanıyor</h3>
+                <p className="text-sm text-stone-300 mt-1">
+                  {activeOrderData ? `#${activeOrderData.id} numaralı siparişiniz alındı ve mutfağımıza iletildi.` : 'Son verdiğiniz sipariş mutfağımıza iletildi ve hazırlanıyor.'}
+                </p>
+              </div>
+            </div>
+            <div className="px-4 py-2 bg-amber-500 text-stone-950 font-bold rounded-lg text-sm shrink-0">
+              Mutfakta 👨‍🍳
+            </div>
+          </div>
+        )}
+
         {/* Hero Section */}
         <div className="relative rounded-3xl overflow-hidden glass-panel p-8 sm:p-12 border border-amber-900/30 shadow-2xl">
           <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -163,7 +213,11 @@ export default function SiparisPage() {
         items={cartItems}
         onRemoveItem={handleRemoveFromCart}
         onClearCart={() => setCartItems([])}
-        onOrderSuccess={(id) => setSuccessOrderId(id)}
+        onOrderSuccess={(id) => {
+          setSuccessOrderId(id);
+          localStorage.setItem('activeOrderId', id);
+          setActiveOrderStatus('PENDING');
+        }}
       />
 
       {/* Order Success Modal */}
