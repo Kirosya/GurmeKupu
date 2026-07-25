@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Product, UnitType, OrderItem } from '@/lib/types';
-import { Plus, Check, Scale } from 'lucide-react';
+import { Plus, Check, Scale, RefreshCw } from 'lucide-react';
 
 // **metin** → bold, \n → ayrı satır olarak render eder
 function BoldText({ text }: { text: string }) {
@@ -30,12 +30,15 @@ function BoldText({ text }: { text: string }) {
 interface ProductCardProps {
   product: Product;
   onAddToCart: (item: OrderItem) => void;
+  onUpdateCart: (item: OrderItem) => void;
+  isInCart: boolean;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onUpdateCart, isInCart }) => {
   const [unitType, setUnitType] = useState<UnitType>('kg');
   const [quantityInput, setQuantityInput] = useState<string>('1');
   const [addedAnimation, setAddedAnimation] = useState<boolean>(false);
+  const [updatedAnimation, setUpdatedAnimation] = useState<boolean>(false);
 
   // Sayısal miktar hesabı
   const rawNum = parseFloat(quantityInput) || 0;
@@ -57,9 +60,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }
       itemTotalPrice: calculatedPrice,
     };
 
-    onAddToCart(item);
-    setAddedAnimation(true);
-    setTimeout(() => setAddedAnimation(false), 1500);
+    if (isInCart) {
+      onUpdateCart(item);
+      setUpdatedAnimation(true);
+      setTimeout(() => setUpdatedAnimation(false), 1500);
+    } else {
+      onAddToCart(item);
+      setAddedAnimation(true);
+      setTimeout(() => setAddedAnimation(false), 1500);
+    }
   };
 
   const handlePresetSelect = (presetKg: number, type: UnitType, valStr: string) => {
@@ -206,19 +215,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }
           onClick={handleAddToCart}
           disabled={rawNum <= 0}
           className={`w-full py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
-            addedAnimation
+            addedAnimation || updatedAnimation
               ? 'bg-emerald-600 text-white'
+              : isInCart
+              ? 'bg-stone-800 border border-amber-500/60 text-amber-400 hover:bg-stone-700 active:scale-95'
               : 'gold-gradient-bg text-stone-950 shadow-lg shadow-amber-900/20 hover:brightness-110 active:scale-95'
           }`}
         >
           {addedAnimation ? (
-            <>
-              <Check className="w-4 h-4" /> Sepete Eklendi
-            </>
+            <><Check className="w-4 h-4" /> Sepete Eklendi</>
+          ) : updatedAnimation ? (
+            <><Check className="w-4 h-4" /> Güncellendi!</>
+          ) : isInCart ? (
+            <><RefreshCw className="w-4 h-4" /> Sepeti Güncelle</>
           ) : (
-            <>
-              <Plus className="w-4 h-4" /> Sepete Ekle
-            </>
+            <><Plus className="w-4 h-4" /> Sepete Ekle</>
           )}
         </button>
       </div>

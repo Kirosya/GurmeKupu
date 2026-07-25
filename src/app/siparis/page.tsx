@@ -41,7 +41,17 @@ export default function SiparisPage() {
     : products.filter(p => p.category === selectedCategory);
 
   const handleAddToCart = (newItem: OrderItem) => {
-    setCartItems(prev => [...prev, newItem]);
+    // Aynı ürün zaten sepette varsa tekrar ekleme
+    const alreadyInCart = cartItems.some(i => i.productId === newItem.productId);
+    if (!alreadyInCart) {
+      setCartItems(prev => [...prev, newItem]);
+    }
+  };
+
+  const handleUpdateCart = (updatedItem: OrderItem) => {
+    setCartItems(prev =>
+      prev.map(i => i.productId === updatedItem.productId ? updatedItem : i)
+    );
   };
 
   const handleRemoveFromCart = (index: number) => {
@@ -124,6 +134,8 @@ export default function SiparisPage() {
                 key={product.id}
                 product={product}
                 onAddToCart={handleAddToCart}
+                onUpdateCart={handleUpdateCart}
+                isInCart={cartItems.some(i => i.productId === product.id)}
               />
             ))}
           </div>

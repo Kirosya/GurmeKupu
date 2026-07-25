@@ -128,64 +128,64 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </button>
           </div>
 
-          {/* Scrollable body */}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
-
+          {/* Scrollable ürünler */}
+          <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4">
             {/* Error */}
             {errorMessage && (
-              <div className="flex items-start gap-2 p-3 rounded-xl bg-red-900/50 border border-red-700/50 text-red-300 text-xs">
+              <div className="flex items-start gap-2 p-3 rounded-xl bg-red-900/50 border border-red-700/50 text-red-300 text-xs mb-4">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>{errorMessage}</span>
               </div>
             )}
 
             {/* Ürünler */}
-            <div>
-              <p className="text-xs font-bold text-white/40 uppercase tracking-wider mb-3">
-                Sepet ({items.length} ürün)
-              </p>
+            <p className="text-xs font-bold text-white/40 uppercase tracking-wider mb-3">
+              Sepet ({items.length} ürün)
+            </p>
 
-              {items.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 gap-3">
-                  <ShoppingBag className="w-12 h-12 text-white/20" />
-                  <p className="text-sm text-white/40 font-medium">Sepetiniz boş</p>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  {items.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between gap-3 p-3 rounded-xl bg-white/5 border border-white/8"
-                    >
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-white truncate">{item.productName}</p>
-                        <p className="text-xs text-amber-400 font-medium mt-0.5">
-                          {item.quantityValue} {item.unitType.toUpperCase()}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-sm font-bold text-amber-400">
-                          {item.itemTotalPrice.toLocaleString('tr-TR', { maximumFractionDigits: 2 })} ₺
-                        </span>
-                        <button
-                          onClick={() => onRemoveItem(idx)}
-                          className="w-7 h-7 rounded-lg flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-white/10 transition-colors"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
+            {items.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-12 gap-3">
+                <ShoppingBag className="w-12 h-12 text-white/20" />
+                <p className="text-sm text-white/40 font-medium">Sepetiniz boş</p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {items.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between gap-3 p-3 rounded-xl bg-white/5 border border-white/8"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-white truncate">{item.productName}</p>
+                      <p className="text-xs text-amber-400 font-medium mt-0.5">
+                        {item.quantityValue} {item.unitType.toUpperCase()}
+                      </p>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-sm font-bold text-amber-400">
+                        {item.itemTotalPrice.toLocaleString('tr-TR', { maximumFractionDigits: 2 })} ₺
+                      </span>
+                      <button
+                        onClick={() => onRemoveItem(idx)}
+                        className="w-7 h-7 rounded-lg flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-white/10 transition-colors"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
-            {/* Form */}
-            {items.length > 0 && (
-              <form id="order-form" onSubmit={handleSubmitOrder} className="space-y-3 pt-4 border-t border-white/10">
-                <p className="text-xs font-bold text-white/40 uppercase tracking-wider mb-3">
-                  Teslimat Bilgileri
-                </p>
+          {/* Footer: Teslimat Bilgileri + Toplam + Sipariş Butonu */}
+          {items.length > 0 && (
+            <div className="px-5 py-4 border-t border-white/10 shrink-0 space-y-3">
+              {/* Teslimat Bilgileri */}
+              <p className="text-xs font-bold text-white/40 uppercase tracking-wider">
+                Teslimat Bilgileri
+              </p>
+              <form id="order-form" onSubmit={handleSubmitOrder} className="space-y-2">
                 <input
                   type="text"
                   required
@@ -211,21 +211,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors resize-none"
                 />
                 <textarea
-                  rows={2}
+                  rows={1}
                   value={orderNote}
                   onChange={(e) => setOrderNote(e.target.value)}
                   placeholder="Sipariş Notu (opsiyonel)"
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors resize-none"
                 />
               </form>
-            )}
-          </div>
 
-          {/* Footer */}
-          {items.length > 0 && (
-            <div className="px-5 py-4 border-t border-white/10 shrink-0 space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-white/60 font-medium">Toplam Tutar</span>
+              {/* Toplam + Buton */}
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-sm text-white/60 font-medium">Toplam</span>
                 <span className="text-xl font-black text-amber-400">
                   {totalPrice.toLocaleString('tr-TR', { maximumFractionDigits: 2 })} ₺
                 </span>
