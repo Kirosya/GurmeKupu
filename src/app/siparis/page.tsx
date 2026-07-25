@@ -110,15 +110,21 @@ export default function SiparisPage() {
               </div>
               <div>
                 <h3 className="text-lg font-bold text-amber-400">Sipariş Hazırlanıyor</h3>
-                <div className="text-sm text-stone-300 mt-2 space-y-1">
+                <div className="text-sm text-stone-300 mt-3 flex flex-col gap-1.5 w-full">
                   {activeOrderData ? (
-                    activeOrderData.items.map((item: any, idx: number) => (
-                      <div key={idx} className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500/50"></span>
-                        <span className="font-bold text-amber-400">{item.quantityValue} {item.unitType}</span>
-                        <span>{item.productName}</span>
+                    <>
+                      {activeOrderData.items.map((item: any, idx: number) => (
+                        <div key={idx} className="flex flex-wrap items-center gap-2 bg-stone-900/50 px-3 py-1.5 rounded-lg border border-stone-800/50 w-fit">
+                          <span className="font-bold text-amber-400">{item.quantityValue} {item.unitType}</span>
+                          <span className="text-stone-200">{item.productName}</span>
+                          <span className="text-stone-500">({item.itemTotalPrice} ₺)</span>
+                        </div>
+                      ))}
+                      <div className="mt-2 pt-3 border-t border-amber-900/30 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-xs text-stone-400">
+                        <span>Tarih: <strong className="text-stone-300">{new Date(activeOrderData.createdAt).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</strong></span>
+                        <span>Toplam Tutar: <strong className="text-amber-400 text-sm">{activeOrderData.totalPrice} ₺</strong></span>
                       </div>
-                    ))
+                    </>
                   ) : (
                     <p>Sipariş detayları yükleniyor...</p>
                   )}
