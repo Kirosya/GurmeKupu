@@ -106,7 +106,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       >
         <div
           className="w-full max-w-md bg-[#1a1a1a] rounded-2xl overflow-hidden flex flex-col shadow-2xl"
-          style={{ maxHeight: '88vh' }}
+          style={{ maxHeight: '90vh' }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -180,42 +180,44 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
           {/* Footer: Teslimat Bilgileri + Toplam + Sipariş Butonu */}
           {items.length > 0 && (
-            <div className="px-5 py-4 border-t border-white/10 shrink-0 space-y-3">
+            <div className="px-4 py-3 border-t border-white/10 shrink-0 space-y-2">
               {/* Teslimat Bilgileri */}
-              <p className="text-xs font-bold text-white/40 uppercase tracking-wider">
+              <p className="text-[10px] font-bold text-white/40 uppercase tracking-wider">
                 Teslimat Bilgileri
               </p>
-              <form id="order-form" onSubmit={handleSubmitOrder} className="space-y-2">
-                <input
-                  type="text"
-                  required
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  placeholder="Ad Soyad"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors"
-                />
-                <input
-                  type="tel"
-                  required
-                  value={customerPhone}
-                  onChange={(e) => setCustomerPhone(e.target.value)}
-                  placeholder="Telefon Numarası"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors"
-                />
+              <form id="order-form" onSubmit={handleSubmitOrder} className="space-y-1.5">
+                <div className="grid grid-cols-2 gap-1.5">
+                  <input
+                    type="text"
+                    required
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    placeholder="Ad Soyad"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors"
+                  />
+                  <input
+                    type="tel"
+                    required
+                    value={customerPhone}
+                    onChange={(e) => setCustomerPhone(e.target.value)}
+                    placeholder="Telefon"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors"
+                  />
+                </div>
                 <textarea
                   required
                   rows={2}
                   value={customerAddress}
                   onChange={(e) => setCustomerAddress(e.target.value)}
                   placeholder="Teslimat Adresi"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors resize-none"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors resize-none"
                 />
                 <textarea
                   rows={1}
                   value={orderNote}
                   onChange={(e) => setOrderNote(e.target.value)}
                   placeholder="Sipariş Notu (opsiyonel)"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors resize-none"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors resize-none"
                 />
               </form>
 
