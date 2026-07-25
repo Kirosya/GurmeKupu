@@ -104,19 +104,26 @@ export default function SiparisPage() {
         {/* Active Order Banner */}
         {activeOrderStatus === 'PENDING' && (
           <div className="bg-amber-500/10 border border-amber-500/40 rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
                 <Clock className="w-6 h-6 text-amber-500 animate-pulse" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-amber-400">Siparişiniz Hazırlanıyor</h3>
-                <p className="text-sm text-stone-300 mt-1">
-                  {activeOrderData ? `#${activeOrderData.id} numaralı siparişiniz alındı ve mutfağımıza iletildi.` : 'Son verdiğiniz sipariş mutfağımıza iletildi ve hazırlanıyor.'}
-                </p>
+                <h3 className="text-lg font-bold text-amber-400">Sipariş Hazırlanıyor</h3>
+                <div className="text-sm text-stone-300 mt-2 space-y-1">
+                  {activeOrderData ? (
+                    activeOrderData.items.map((item: any, idx: number) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500/50"></span>
+                        <span className="font-bold text-amber-400">{item.quantityValue} {item.unitType}</span>
+                        <span>{item.productName}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <p>Sipariş detayları yükleniyor...</p>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="px-4 py-2 bg-amber-500 text-stone-950 font-bold rounded-lg text-sm shrink-0">
-              Mutfakta 👨‍🍳
             </div>
           </div>
         )}
