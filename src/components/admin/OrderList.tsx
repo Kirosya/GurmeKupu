@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Order } from '@/lib/types';
-import { CheckCircle, Clock, MapPin, Phone, User, RefreshCw, PackageCheck, FileText, Bell } from 'lucide-react';
+import { CheckCircle, Clock, MapPin, Phone, User, RefreshCw, PackageCheck, FileText, Bell, ChevronDown, ChevronUp } from 'lucide-react';
 
 export const OrderList: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -10,6 +10,7 @@ export const OrderList: React.FC = () => {
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
   const [lastRefreshed, setLastRefreshed] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isPastOrdersOpen, setIsPastOrdersOpen] = useState<boolean>(false);
   
   // Önceki sipariş sayısını takip eden ref (Yeni sipariş geldiğinde sesli uyarı için)
   const previousOrdersCountRef = useRef<number>(-1);
@@ -251,55 +252,61 @@ export const OrderList: React.FC = () => {
       </div>
 
       {/* SECTION 2: TESLİM EDİLEN SİPARİŞLER (ALTTAN & SOLUK RENKLERDE) */}
-      <div className="space-y-4 pt-6 border-t border-stone-800">
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-stone-400 uppercase tracking-wider">
+      <div className="pt-6 border-t border-stone-800">
+        <button
+          onClick={() => setIsPastOrdersOpen(!isPastOrdersOpen)}
+          className="w-full flex items-center justify-between p-4 rounded-xl bg-stone-900/60 hover:bg-stone-800/80 transition-colors border border-stone-800/80"
+        >
+          <h3 className="text-sm font-bold text-stone-400 uppercase tracking-wider flex items-center gap-2">
             Teslim Edilmiş Siparişler ({deliveredOrders.length})
           </h3>
-          <span className="text-xs text-stone-500 font-medium">Altta Soluk Arşiv Görünümü</span>
-        </div>
+          <div className="flex items-center gap-3">
+            <span className="text-xs text-stone-500 font-medium hidden sm:block">Altta Soluk Arşiv Görünümü</span>
+            {isPastOrdersOpen ? <ChevronUp className="w-5 h-5 text-stone-400" /> : <ChevronDown className="w-5 h-5 text-stone-400" />}
+          </div>
+        </button>
 
-        {deliveredOrders.length === 0 ? (
-          <p className="text-xs text-stone-500 italic">Henüz teslim edilmiş sipariş geçmişi bulunmuyor.</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {deliveredOrders.map(order => (
-              <div
-                key={order.id}
-                className="rounded-2xl bg-stone-900/40 border border-stone-800/60 p-4 space-y-3 opacity-60 hover:opacity-90 transition-opacity duration-200"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono text-stone-500">#{order.id}</span>
-                      <span className="text-[10px] text-stone-600 font-medium">{new Date(order.createdAt).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</span>
+        {isPastOrdersOpen && (
+          <div className="mt-4 space-y-4">
+            {deliveredOrders.length === 0 ? (
+              <p className="text-xs text-stone-500 italic p-2">Henüz teslim edilmiş sipariş geçmişi bulunmuyor.</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {deliveredOrders.map(order => (
+                  <div key={order.id} className="rounded-2xl bg-stone-900/40 border border-stone-800/60 p-4 space-y-3 opacity-60 hover:opacity-90 transition-opacity duration-200">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-mono text-stone-500">#{order.id}</span>
+                          <span className="text-[10px] text-stone-600 font-medium">{new Date(order.createdAt).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</span>
+                        </div>
+                        <h4 className="text-xs font-bold text-stone-300 mt-0.5">{order.customerName}</h4>
+                      </div>
+                      <span className="text-[10px] font-bold text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-900">
+                        ✓ TESLİM EDİLDİ
+                      </span>
                     </div>
-                    <h4 className="text-xs font-bold text-stone-300 mt-0.5">{order.customerName}</h4>
+
+                    <div className="text-[11px] text-stone-400 space-y-1">
+                      <p className="truncate">📍 {order.customerAddress}</p>
+                      <p>📦 {order.items.map(i => `${i.productName} (${i.quantityValue}${i.unitType})`).join(', ')}</p>
+                    </div>
+
+                    <div className="flex justify-between items-center pt-2 border-t border-stone-800/40 text-xs">
+                      <span className="text-stone-500">
+                        {new Date(order.createdAt).toLocaleDateString('tr-TR')} - {new Date(order.createdAt).toLocaleTimeString('tr-TR')}
+                      </span>
+                      <span className="font-bold text-stone-300">
+                        {order.totalPrice.toLocaleString('tr-TR')} ₺
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-900">
-                    ✓ TESLİM EDİLDİ
-                  </span>
-                </div>
-
-                <div className="text-[11px] text-stone-400 space-y-1">
-                  <p className="truncate">📍 {order.customerAddress}</p>
-                  <p>📦 {order.items.map(i => `${i.productName} (${i.quantityValue}${i.unitType})`).join(', ')}</p>
-                </div>
-
-                <div className="flex justify-between items-center pt-2 border-t border-stone-800/40 text-xs">
-                  <span className="text-stone-500">
-                    {new Date(order.createdAt).toLocaleDateString('tr-TR')} - {new Date(order.createdAt).toLocaleTimeString('tr-TR')}
-                  </span>
-                  <span className="font-bold text-stone-300">
-                    {order.totalPrice.toLocaleString('tr-TR')} ₺
-                  </span>
-                </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         )}
       </div>
-
     </div>
   );
 };
