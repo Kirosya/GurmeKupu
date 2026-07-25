@@ -185,7 +185,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <p className="text-[10px] font-bold text-white/40 uppercase tracking-wider">
                 Teslimat Bilgileri
               </p>
-              <form id="order-form" onSubmit={handleSubmitOrder} className="space-y-1.5">
+              <form id="order-form" onSubmit={handleSubmitOrder} className="space-y-1.5 overflow-y-auto max-h-[35vh] pr-1">
                 <div className="grid grid-cols-2 gap-1.5">
                   <input
                     type="text"
@@ -215,9 +215,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <textarea
                   rows={1}
                   value={orderNote}
-                  onChange={(e) => setOrderNote(e.target.value)}
+                  onChange={(e) => {
+                    setOrderNote(e.target.value);
+                    e.target.style.height = 'auto';
+                    e.target.style.height = `${e.target.scrollHeight}px`;
+                  }}
+                  style={{ maxHeight: '4.5rem' }}
                   placeholder="Sipariş Notu (opsiyonel)"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors resize-none"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-amber-500 transition-colors resize-none overflow-y-auto"
                 />
               </form>
 
