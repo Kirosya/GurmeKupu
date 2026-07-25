@@ -100,13 +100,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
       {/* Modal */}
       <div
-        className="fixed inset-0 flex items-center justify-center p-4"
+        className="fixed inset-0 flex items-center justify-center px-4"
         style={{ zIndex: 9999 }}
         onClick={onClose}
       >
         <div
           className="w-full max-w-md bg-[#1a1a1a] rounded-2xl overflow-hidden flex flex-col shadow-2xl"
-          style={{ maxHeight: '94vh' }}
+          style={{ maxHeight: '100dvh' }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
