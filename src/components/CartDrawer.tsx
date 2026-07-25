@@ -30,11 +30,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const [errorMessage, setErrorMessage] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Sepet her açıldığında en üste kaydır
+  // Sepet her açıldığında en üste kaydır + sayfa scroll'u kilitle
   useEffect(() => {
-    if (isOpen && scrollRef.current) {
-      scrollRef.current.scrollTop = 0;
+    if (isOpen) {
+      if (scrollRef.current) scrollRef.current.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   const totalPrice = items.reduce((sum, item) => sum + item.itemTotalPrice, 0);
@@ -100,17 +106,18 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-stone-950/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[55] bg-stone-950/80 backdrop-blur-sm"
           />
 
-          {/* Modal - always centered on viewport with fixed positioning */}
+          {/* Modal - centered on viewport, internally scrollable, page scroll locked */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: 16 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100vw-2rem)] max-w-lg bg-stone-900 border border-stone-800 rounded-3xl text-stone-100 shadow-2xl flex flex-col"
-            style={{ maxHeight: '90vh' }}
+            className="fixed z-[60] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100vw-2rem)] max-w-lg bg-stone-900 border border-stone-800 rounded-3xl text-stone-100 shadow-2xl flex flex-col"
+            style={{ maxHeight: '90svh' }}
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div className="p-6 border-b border-stone-800 flex items-center justify-between bg-stone-900">
