@@ -69,8 +69,8 @@ export const OrderList: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchOrders();
-    const interval = setInterval(fetchOrders, 15000);
+    fetchOrders(); // Sayfa yüklendiğinde/yenilendiğinde anında veri çekilir
+    const interval = setInterval(fetchOrders, 60000); // Ardından her 1 dakikada bir kontrol eder
     return () => clearInterval(interval);
   }, []);
 
