@@ -218,7 +218,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
           disabled={rawNum <= 0}
           className={`w-full py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
             hasChanged
-              ? 'bg-amber-500 text-stone-950 hover:bg-amber-400 active:scale-95'
+              ? 'bg-blue-600 text-white hover:bg-blue-500 active:scale-95'
               : isInCart
               ? 'bg-emerald-600 text-white'
               : 'gold-gradient-bg text-stone-950 shadow-lg shadow-amber-900/20 hover:brightness-110 active:scale-95'
