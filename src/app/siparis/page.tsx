@@ -109,7 +109,9 @@ export default function SiparisPage() {
                 <Clock className="w-6 h-6 text-amber-500 animate-pulse" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-amber-400">Sipariş Hazırlanıyor</h3>
+                <h3 className="text-lg font-bold text-amber-400">
+                  Sipariş Hazırlanıyor {activeOrderData && <span className="text-amber-600 ml-2">#{activeOrderData.id}</span>}
+                </h3>
                 <div className="text-sm text-stone-300 mt-3 flex flex-col gap-1.5 w-full">
                   {activeOrderData ? (
                     <>

@@ -9,6 +9,7 @@ export const OrderList: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
   const [lastRefreshed, setLastRefreshed] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   
   // Önceki sipariş sayısını takip eden ref (Yeni sipariş geldiğinde sesli uyarı için)
   const previousOrdersCountRef = useRef<number>(-1);
@@ -95,15 +96,25 @@ export const OrderList: React.FC = () => {
     }
   };
 
-  // Siparişleri Aktif ve Teslim Edilmiş olarak 2 gruba ayırıyoruz:
-  const activeOrders = orders.filter(o => o.status === 'PENDING');
-  const deliveredOrders = orders.filter(o => o.status === 'DELIVERED');
+  // Siparişleri Arama ve Duruma göre filtreleme
+  const filteredOrders = orders.filter(order => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      order.id.toLowerCase().includes(q) ||
+      order.customerName.toLowerCase().includes(q) ||
+      order.items.some(item => item.productName.toLowerCase().includes(q))
+    );
+  });
+
+  const activeOrders = filteredOrders.filter(o => o.status === 'PENDING');
+  const deliveredOrders = filteredOrders.filter(o => o.status === 'DELIVERED');
 
   return (
     <div className="space-y-8">
       
       {/* Top Bar with Live Refresh */}
-      <div className="flex items-center justify-between bg-stone-900/80 p-4 rounded-2xl border border-stone-800 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row md:items-center justify-between bg-stone-900/80 p-4 rounded-2xl border border-stone-800 backdrop-blur-md gap-4">
         <div>
           <h2 className="text-xl font-extrabold text-stone-100 flex items-center gap-2">
             <Clock className="w-5 h-5 text-amber-500 animate-pulse" /> Canlı Sipariş Takip Ekranı
@@ -113,14 +124,23 @@ export const OrderList: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={fetchOrders}
-          disabled={isLoading}
-          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-stone-950 border border-stone-800 text-stone-300 text-xs font-semibold hover:border-amber-500 hover:text-amber-400 transition-colors"
-        >
-          <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-amber-500' : ''}`} />
-          <span>Yenile</span>
-        </button>
+        <div className="flex items-center gap-3 w-full md:w-auto">
+          <input
+            type="text"
+            placeholder="Sipariş No, Müşteri veya Ürün Ara..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="flex-1 md:flex-none bg-stone-950 border border-stone-800 rounded-xl px-4 py-2 text-sm text-stone-200 focus:outline-none focus:border-amber-500/50 md:min-w-[280px]"
+          />
+          <button
+            onClick={fetchOrders}
+            disabled={isLoading}
+            className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-stone-950 border border-stone-800 text-stone-300 text-xs font-semibold hover:border-amber-500 hover:text-amber-400 transition-colors shrink-0"
+          >
+            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-amber-500' : ''}`} />
+            <span className="hidden sm:inline">Yenile</span>
+          </button>
+        </div>
       </div>
 
       {/* SECTION 1: AKTİF SİPARİŞLER (ÜSTTE & CANLI RENKLERDE) */}
