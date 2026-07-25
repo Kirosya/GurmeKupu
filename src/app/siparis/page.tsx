@@ -15,8 +15,7 @@ export default function SiparisPage() {
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [successOrderId, setSuccessOrderId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [activeOrderStatus, setActiveOrderStatus] = useState<string | null>(null);
-  const [activeOrderData, setActiveOrderData] = useState<any>(null);
+  const [activeOrders, setActiveOrders] = useState<any[]>([]);
 
   useEffect(() => {
     async function loadProducts() {
@@ -35,31 +34,52 @@ export default function SiparisPage() {
     loadProducts();
   }, []);
 
-  useEffect(() => {
-    async function checkActiveOrder() {
-      const activeOrderId = localStorage.getItem('activeOrderId');
-      if (activeOrderId) {
-        try {
-          const res = await fetch(`/api/orders?id=${activeOrderId}`);
-          const data = await res.json();
-          if (data.success && data.order) {
-            if (data.order.status === 'DELIVERED') {
-              localStorage.removeItem('activeOrderId');
-              setActiveOrderStatus(null);
-            } else {
-              setActiveOrderStatus(data.order.status);
-              setActiveOrderData(data.order);
-            }
-          } else {
-            localStorage.removeItem('activeOrderId');
-          }
-        } catch (err) {
-          console.error(err);
+  const checkActiveOrders = async () => {
+    // Legacy support
+    const legacyId = localStorage.getItem('activeOrderId');
+    if (legacyId) {
+      const currentStr = localStorage.getItem('activeOrderIds') || '[]';
+      try {
+        const currentIds = JSON.parse(currentStr);
+        if (!currentIds.includes(legacyId)) {
+          currentIds.push(legacyId);
+          localStorage.setItem('activeOrderIds', JSON.stringify(currentIds));
+        }
+      } catch (e) {}
+      localStorage.removeItem('activeOrderId');
+    }
+
+    const idsStr = localStorage.getItem('activeOrderIds');
+    if (!idsStr) return;
+
+    try {
+      const ids = JSON.parse(idsStr);
+      if (!Array.isArray(ids) || ids.length === 0) return;
+
+      const fetchedOrders = [];
+      const remainingIds = [];
+
+      for (const id of ids) {
+        const res = await fetch(`/api/orders?id=${id}`);
+        const data = await res.json();
+        if (data.success && data.order && data.order.status !== 'DELIVERED') {
+          fetchedOrders.push(data.order);
+          remainingIds.push(id);
         }
       }
+
+      setActiveOrders(fetchedOrders);
+      if (remainingIds.length !== ids.length) {
+        localStorage.setItem('activeOrderIds', JSON.stringify(remainingIds));
+      }
+    } catch (err) {
+      console.error(err);
     }
-    checkActiveOrder();
-    const interval = setInterval(checkActiveOrder, 10000);
+  };
+
+  useEffect(() => {
+    checkActiveOrders();
+    const interval = setInterval(checkActiveOrders, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -101,38 +121,38 @@ export default function SiparisPage() {
 
       <main className={`flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 ${cartItems.length > 0 ? 'pb-28' : 'pb-12'}`}>
         
-        {/* Active Order Banner */}
-        {activeOrderStatus === 'PENDING' && (
-          <div className="bg-amber-500/10 border border-amber-500/40 rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
-                <Clock className="w-6 h-6 text-amber-500 animate-pulse" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-amber-400">
-                  Sipariş Hazırlanıyor {activeOrderData && <span className="text-amber-600 ml-2">#{activeOrderData.id}</span>}
-                </h3>
-                <div className="text-sm text-stone-300 mt-3 flex flex-col gap-1.5 w-full">
-                  {activeOrderData ? (
-                    <>
-                      {activeOrderData.items.map((item: any, idx: number) => (
-                        <div key={idx} className="flex flex-wrap items-center gap-2 bg-stone-900/50 px-3 py-1.5 rounded-lg border border-stone-800/50 w-fit">
-                          <span className="font-bold text-amber-400">{item.quantityValue} {item.unitType}</span>
-                          <span className="text-stone-200">{item.productName}</span>
-                          <span className="text-stone-500">({item.itemTotalPrice} ₺)</span>
+        {/* Active Orders Banners */}
+        {activeOrders.length > 0 && (
+          <div className="space-y-4 mb-8">
+            {activeOrders.map(order => (
+              <div key={order.id} className="bg-amber-500/10 border border-amber-500/40 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-start gap-4 w-full">
+                  <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
+                    <Clock className="w-6 h-6 text-amber-500 animate-pulse" />
+                  </div>
+                  <div className="w-full">
+                    <h3 className="text-lg font-bold text-amber-400">
+                      Sipariş Hazırlanıyor <span className="text-amber-600 ml-2">#{order.id}</span>
+                    </h3>
+                    <div className="text-sm text-stone-300 mt-3 flex flex-col gap-1.5 w-full">
+                      <>
+                        {order.items.map((item: any, idx: number) => (
+                          <div key={idx} className="flex flex-wrap items-center gap-2 bg-stone-900/50 px-3 py-1.5 rounded-lg border border-stone-800/50 w-fit">
+                            <span className="font-bold text-amber-400">{item.quantityValue} {item.unitType}</span>
+                            <span className="text-stone-200">{item.productName}</span>
+                            <span className="text-stone-500">({item.itemTotalPrice} ₺)</span>
+                          </div>
+                        ))}
+                        <div className="mt-2 pt-3 border-t border-amber-900/30 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-xs text-stone-400">
+                          <span>Tarih: <strong className="text-stone-300">{new Date(order.createdAt).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</strong></span>
+                          <span>Toplam Tutar: <strong className="text-amber-400 text-sm">{order.totalPrice} ₺</strong></span>
                         </div>
-                      ))}
-                      <div className="mt-2 pt-3 border-t border-amber-900/30 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-xs text-stone-400">
-                        <span>Tarih: <strong className="text-stone-300">{new Date(activeOrderData.createdAt).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</strong></span>
-                        <span>Toplam Tutar: <strong className="text-amber-400 text-sm">{activeOrderData.totalPrice} ₺</strong></span>
-                      </div>
-                    </>
-                  ) : (
-                    <p>Sipariş detayları yükleniyor...</p>
-                  )}
+                      </>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         )}
 
@@ -230,8 +250,15 @@ export default function SiparisPage() {
         onClearCart={() => setCartItems([])}
         onOrderSuccess={(id) => {
           setSuccessOrderId(id);
-          localStorage.setItem('activeOrderId', id);
-          setActiveOrderStatus('PENDING');
+          const currentStr = localStorage.getItem('activeOrderIds') || '[]';
+          try {
+            const currentIds = JSON.parse(currentStr);
+            currentIds.push(id);
+            localStorage.setItem('activeOrderIds', JSON.stringify(currentIds));
+          } catch (e) {
+            localStorage.setItem('activeOrderIds', JSON.stringify([id]));
+          }
+          checkActiveOrders();
         }}
       />
 
