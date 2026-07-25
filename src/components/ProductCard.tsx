@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Product, UnitType, OrderItem } from '@/lib/types';
-import { Plus, Check, Scale } from 'lucide-react';
+import { Plus, Check, Scale, RefreshCw } from 'lucide-react';
 
 // **metin** → bold, \n → ayrı satır olarak render eder
 function BoldText({ text }: { text: string }) {
@@ -31,12 +31,20 @@ interface ProductCardProps {
   product: Product;
   onAddToCart: (item: OrderItem) => void;
   onUpdateCart: (item: OrderItem) => void;
-  isInCart: boolean;
+  cartItem?: OrderItem;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onUpdateCart, isInCart }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onUpdateCart, cartItem }) => {
   const [unitType, setUnitType] = useState<UnitType>('kg');
   const [quantityInput, setQuantityInput] = useState<string>('1');
+
+  const isInCart = !!cartItem;
+
+  // Mevcut input, sepetteki kayıttan farklı mı?
+  const hasChanged = isInCart && (
+    parseFloat(quantityInput) !== cartItem!.quantityValue ||
+    unitType !== cartItem!.unitType
+  );
 
   // Sayısal miktar hesabı
   const rawNum = parseFloat(quantityInput) || 0;
@@ -209,12 +217,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
           onClick={handleAddToCart}
           disabled={rawNum <= 0}
           className={`w-full py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
-            isInCart
+            hasChanged
+              ? 'bg-amber-500 text-stone-950 hover:bg-amber-400 active:scale-95'
+              : isInCart
               ? 'bg-emerald-600 text-white'
               : 'gold-gradient-bg text-stone-950 shadow-lg shadow-amber-900/20 hover:brightness-110 active:scale-95'
           }`}
         >
-          {isInCart ? (
+          {hasChanged ? (
+            <><RefreshCw className="w-4 h-4" /> Sepeti Güncelle</>
+          ) : isInCart ? (
             <><Check className="w-4 h-4" /> Eklendi</>
           ) : (
             <><Plus className="w-4 h-4" /> Sepete Ekle</>

@@ -135,7 +135,7 @@ export default function SiparisPage() {
                 product={product}
                 onAddToCart={handleAddToCart}
                 onUpdateCart={handleUpdateCart}
-                isInCart={cartItems.some(i => i.productId === product.id)}
+                cartItem={cartItems.find(i => i.productId === product.id)}
               />
             ))}
           </div>
