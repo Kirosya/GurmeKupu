@@ -155,7 +155,10 @@ export const OrderList: React.FC = () => {
                 {/* Sipariş Başlığı */}
                 <div className="flex items-center justify-between pr-24">
                   <div>
-                    <span className="text-xs font-bold text-amber-400 font-mono">#{order.id}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-bold text-amber-400 font-mono">#{order.id}</span>
+                      <span className="text-[10px] text-stone-500 font-medium flex items-center gap-1"><Clock className="w-3 h-3" /> {new Date(order.createdAt).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</span>
+                    </div>
                     <h4 className="text-base font-extrabold text-stone-100 flex items-center gap-1.5 mt-0.5">
                       <User className="w-4 h-4 text-stone-400" /> {order.customerName}
                     </h4>
@@ -243,9 +246,12 @@ export const OrderList: React.FC = () => {
                 className="rounded-2xl bg-stone-900/40 border border-stone-800/60 p-4 space-y-3 opacity-60 hover:opacity-90 transition-opacity duration-200"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-stone-500">#{order.id}</span>
-                    <h4 className="text-xs font-bold text-stone-300">{order.customerName}</h4>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono text-stone-500">#{order.id}</span>
+                      <span className="text-[10px] text-stone-600 font-medium">{new Date(order.createdAt).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</span>
+                    </div>
+                    <h4 className="text-xs font-bold text-stone-300 mt-0.5">{order.customerName}</h4>
                   </div>
                   <span className="text-[10px] font-bold text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-900">
                     ✓ TESLİM EDİLDİ
