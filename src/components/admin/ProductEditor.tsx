@@ -266,9 +266,9 @@ export const ProductEditor: React.FC = () => {
           <div key={p.id} className="bg-stone-900 border border-stone-800 rounded-2xl p-4 space-y-4 hover:border-amber-500/40 transition-colors flex flex-col">
             
             {/* Üst Kısım: Fotoğraf ve Temel Bilgiler */}
-            <div className="flex items-start justify-between gap-3">
+            <div className="flex flex-col sm:flex-row items-start justify-between gap-3">
               {/* Fotoğraf Değiştirme */}
-              <div className="relative group shrink-0">
+              <div className="relative group shrink-0 mx-auto sm:mx-0">
                 <img src={p.image} alt={p.name} className="w-20 h-20 rounded-xl object-cover border border-stone-800 transition-opacity group-hover:opacity-50" />
                 <label className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer bg-black/40 rounded-xl transition-opacity">
                   {uploadingImageId === p.id ? (
@@ -283,7 +283,7 @@ export const ProductEditor: React.FC = () => {
                 </label>
               </div>
               
-              <div className="flex-1">
+              <div className="flex-1 w-full">
                 <div className="flex justify-between items-start gap-2">
                   <input
                     type="text"
@@ -326,7 +326,7 @@ export const ProductEditor: React.FC = () => {
             </div>
 
             {/* Alt Kısım: Fiyat ve Stok */}
-            <div className="grid grid-cols-2 gap-3 pt-3 border-t border-stone-800/60 mt-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-stone-800/60 mt-auto">
               <div>
                 <label className="text-[10px] text-stone-400 block mb-0.5">Kg Fiyatı (TL/kg):</label>
                 <div className="relative">

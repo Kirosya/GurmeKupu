@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { OrderList } from '@/components/admin/OrderList';
 import { ProductEditor } from '@/components/admin/ProductEditor';
-import { ShieldCheck, ShoppingBag, Utensils, Lock, LogOut, ArrowLeft, BellRing, Bell } from 'lucide-react';
+import { ShieldCheck, ShoppingBag, Lock, LogOut, ArrowLeft, BellRing, Bell, Plus, Utensils } from 'lucide-react';
 import Link from 'next/link';
 
 function AdminPageContent() {
@@ -150,14 +150,10 @@ function AdminPageContent() {
       <header className="sticky top-0 z-40 w-full glass-panel border-b border-stone-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/" className="w-10 h-10 rounded-xl gold-gradient-bg flex items-center justify-center text-stone-950 font-bold">
-              <Utensils className="w-5 h-5" />
-            </Link>
             <div>
               <h1 className="text-lg font-extrabold text-stone-100 flex items-center gap-2">
-                Gurme Küpü <span className="text-amber-500 text-xs px-2 py-0.5 rounded bg-amber-950 border border-amber-800">Admin Panel</span>
+                Gurme Küpü
               </h1>
-              <p className="text-[11px] text-stone-400">Canlı Sipariş & Ürün Yönetimi</p>
             </div>
           </div>
 
@@ -184,6 +180,15 @@ function AdminPageContent() {
                 </>
               )}
             </button>
+
+            <Link
+              href="/siparis"
+              target="_blank"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl gold-gradient-bg text-stone-950 font-bold text-xs transition-all shadow-md hover:brightness-110"
+            >
+              <Plus className="w-4 h-4" />
+              <span className="hidden sm:inline">Sipariş Oluştur</span>
+            </Link>
 
             <button
               onClick={handleLogout}
