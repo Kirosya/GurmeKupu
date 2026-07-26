@@ -143,16 +143,23 @@ export default function MenuPage() {
                       </div>
                     </div>
 
-                    <Link 
-                      href="/siparis" 
-                      className={`mt-6 w-full py-3 rounded-xl font-bold text-center transition-colors text-sm ${
+                    <a 
+                      href={`https://wa.me/905369305151?text=${encodeURIComponent(`Merhaba, ${product.name} hakkında bilgi almak ve sipariş vermek istiyorum.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`mt-6 w-full py-3 rounded-xl font-bold text-center transition-colors text-sm flex items-center justify-center gap-2 ${
                         product.isAvailable 
                           ? 'bg-stone-900 text-white hover:bg-stone-800' 
                           : 'bg-stone-200 text-stone-400 pointer-events-none'
                       }`}
                     >
-                      {product.isAvailable ? 'Sipariş Ekranına Git' : 'Tükendi'}
-                    </Link>
+                      {product.isAvailable ? (
+                        <>
+                          <MessageCircle className="w-4 h-4" />
+                          <span>İletişime Geç</span>
+                        </>
+                      ) : 'Tükendi'}
+                    </a>
                   </div>
                 </div>
               ))}
