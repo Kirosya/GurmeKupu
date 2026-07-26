@@ -233,7 +233,7 @@ export default function SiparisPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Utensils className="w-4 h-4 text-amber-500" />
-            <span className="font-extrabold text-stone-200">Gurme Küpü Sipariş Paneli © 2026</span>
+            <span className="font-extrabold text-stone-200">Gurme Küpü Sipariş Paneli</span>
           </div>
           <p className="text-stone-500">
             Tüm hakları saklıdır. Kg ve Gram bazlı sipariş ekranı.

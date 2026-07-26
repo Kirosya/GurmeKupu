@@ -214,7 +214,7 @@ export default function MenuPage() {
             <Link href="/menu" className="hover:text-stone-900 transition-colors text-[#B84C0C] font-bold">Ürün Kataloğu</Link>
             <Link href="/markalarimiz" className="hover:text-stone-900 transition-colors">Markalarımız</Link>
           </div>
-          <p>© 2026 Gurme Küpü. Tüm hakları saklıdır.</p>
+          <p>Gurme Küpü. Tüm hakları saklıdır.</p>
         </div>
       </footer>
     </div>

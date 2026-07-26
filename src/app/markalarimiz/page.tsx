@@ -134,7 +134,7 @@ export default function BrandsPage() {
           </div>
 
           <p className="text-center md:text-right">
-            © 2026 Gurme Küpü. Tüm hakları saklıdır.
+            Gurme Küpü. Tüm hakları saklıdır.
           </p>
         </div>
       </footer>
