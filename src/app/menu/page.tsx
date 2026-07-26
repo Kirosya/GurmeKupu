@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from '@/components/Header';
 import Link from 'next/link';
+import Image from 'next/image';
 import { MessageCircle, Package, Utensils } from 'lucide-react';
 import { Product } from '@/lib/types';
 
@@ -96,10 +97,12 @@ export default function MenuPage() {
                   {/* Görsel */}
                   <div className="relative h-52 overflow-hidden bg-stone-100">
                     {product.image ? (
-                      <img
+                      <Image
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        fill
+                        loading="lazy"
+                        className="object-cover hover:scale-105 transition-transform duration-700"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-stone-300">
