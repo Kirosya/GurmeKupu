@@ -9,7 +9,7 @@ export async function sendOrderNotifications(order: Order) {
       .map(item => `${item.quantityValue}${item.unitType.toLowerCase()} ${item.productName}`)
       .join(', ');
       
-    const title = `🍽️ YENİ SİPARİŞ: ${order.totalPrice.toLocaleString('tr-TR')} ₺`;
+    const title = `YENİ SİPARİŞ: ${order.customerName} - ${order.totalPrice.toLocaleString('tr-TR')}₺`;
     const body = itemsSummary;
     
     console.log(`Bildirim gönderiliyor... Toplam cihaz: ${tokens?.length || 0}`);
@@ -37,7 +37,7 @@ export async function sendOrderNotifications(order: Order) {
         )
         .join('\n');
 
-      const message = `🔔 *YENİ SİPARİŞ*\n\n👤 ${order.customerName}\n📱 ${order.customerPhone}\n📍 ${order.customerAddress}\n\n📝 Not: ${order.orderNote || 'Yok'}\n\n🛍️ *Ürünler:*\n${formattedItems}\n\n💰 *Toplam:* ${order.totalPrice.toLocaleString('tr-TR')} ₺`;
+      const message = `*YENİ SİPARİŞ*\n\n👤 ${order.customerName}\n📱 ${order.customerPhone}\n📍 ${order.customerAddress}\n\n📝 Not: ${order.orderNote || 'Yok'}\n\n🛍️ *Ürünler:*\n${formattedItems}\n\n💰 *Toplam:* ${order.totalPrice.toLocaleString('tr-TR')} ₺`;
       
       const tgUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
       await fetch(tgUrl, {
