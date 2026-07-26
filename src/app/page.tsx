@@ -144,7 +144,7 @@ export default function LandingHomePage() {
           {/* Sağ: Ana görsel */}
           <div className="relative h-[50vh] lg:h-auto order-1 lg:order-2 overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85"
+              src="/images/hero.jpg"
               alt="Gurme Küpü Ürünleri"
               fill
               priority
@@ -198,7 +198,7 @@ export default function LandingHomePage() {
           </div>
           <div className="relative rounded-3xl overflow-hidden h-[480px] shadow-2xl shadow-blue-900/10 border-4 border-white">
             <Image
-              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=85"
+              src="/images/kitchen.jpg"
               alt="Gurme Küpü Mutfak"
               fill
               loading="lazy"
@@ -216,7 +216,7 @@ export default function LandingHomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="h-[420px] rounded-3xl overflow-hidden relative group shadow-xl shadow-blue-900/10">
-              <Image src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1200&q=85" alt="Sarma" fill loading="lazy" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/images/sarma.jpg" alt="Sarma" fill loading="lazy" className="object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A3A]/90 via-[#0A1A3A]/20 to-transparent" />
               <div className="absolute bottom-8 left-8 right-8">
                 <h3 className="text-3xl font-black text-white">Sarma Çeşitleri</h3>
@@ -226,7 +226,7 @@ export default function LandingHomePage() {
 
             <div className="grid grid-rows-2 gap-8 h-[420px]">
               <div className="rounded-3xl overflow-hidden relative group shadow-xl shadow-blue-900/10">
-                <Image src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=85" alt="İçli Köfte" fill loading="lazy" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                <Image src="/images/kofte_manti.jpg" alt="İçli Köfte" fill loading="lazy" className="object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A3A]/90 via-transparent to-transparent" />
                 <div className="absolute bottom-5 left-5">
                   <h3 className="text-xl font-black text-white">İçli Köfte & Mantı</h3>
@@ -234,7 +234,7 @@ export default function LandingHomePage() {
                 </div>
               </div>
               <div className="rounded-3xl overflow-hidden relative group shadow-xl shadow-blue-900/10">
-                <Image src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=800&q=85" alt="Dolma" fill loading="lazy" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                <Image src="/images/dolma.jpg" alt="Dolma" fill loading="lazy" className="object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A3A]/90 via-transparent to-transparent" />
                 <div className="absolute bottom-5 left-5">
                   <h3 className="text-xl font-black text-white">Dolma Çeşitleri</h3>
