@@ -66,8 +66,34 @@ export default function LandingHomePage() {
     setReviews(shuffled.slice(0, 3));
   }, []);
 
+  const localBusinessLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FoodEstablishment',
+    name: 'Gurme Küpü',
+    image: 'https://gurmekupu.com/logo.png',
+    '@id': 'https://gurmekupu.com',
+    url: 'https://gurmekupu.com',
+    telephone: '+905369305151',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Ankara',
+      addressCountry: 'TR'
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 39.92077,
+      longitude: 32.85411
+    },
+    servesCuisine: 'Turkish, Ev Yemekleri, Zeytinyağlılar, Meze',
+    priceRange: '₺₺'
+  };
+
   return (
     <div className="min-h-screen bg-[#FFFDF9] text-slate-900 flex flex-col font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessLd) }}
+      />
       <Header />
 
       <main className="flex-1">

@@ -51,8 +51,27 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Gurme Küpü',
+    url: 'https://gurmekupu.com',
+    logo: 'https://gurmekupu.com/logo.png',
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+90-536-930-5151',
+      contactType: 'customer service'
+    }
+  };
+
   return (
     <html lang="tr" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="bg-stone-950 text-stone-100 antialiased min-h-screen">
         {children}
       </body>
