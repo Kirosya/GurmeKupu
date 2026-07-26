@@ -73,22 +73,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
     }
   };
 
-  const handleIncrement = (amount: number) => {
-    let current = parseFloat(quantityInput) || 0;
-    let next = current + amount;
+  const handleAddAmount = (g: number) => {
+    let currentNum = parseFloat(quantityInput) || 0;
     
-    // Alt sınır
-    const minVal = unitType === 'kg' ? 0.1 : 50;
-    if (next < minVal) next = minVal;
+    // mevcut değeri gram cinsinden bul
+    let currentInGrams = unitType === 'kg' ? currentNum * 1000 : currentNum;
+    let nextInGrams = currentInGrams + g;
     
-    // JS ondalık düzeltmesi
+    // min sınır (50 gram)
+    if (nextInGrams < 50) nextInGrams = 50;
+
     if (unitType === 'kg') {
-      next = parseFloat(next.toFixed(2));
+      setQuantityInput((nextInGrams / 1000).toString());
     } else {
-      next = Math.round(next);
+      setQuantityInput(Math.round(nextInGrams).toString());
     }
-    
-    setQuantityInput(next.toString());
   };
 
   return (
@@ -165,38 +164,44 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
               </div>
             </div>
 
-            {/* Sayısal Input & Artırma / Eksiltme Butonları */}
-            <div className="flex items-center gap-2 mt-2">
-              <button
-                type="button"
-                onClick={() => handleIncrement(unitType === 'kg' ? -1 : -250)}
-                className="w-10 h-10 shrink-0 flex items-center justify-center bg-stone-950 hover:bg-stone-800 text-stone-300 font-bold rounded-xl border border-stone-800 hover:border-amber-500/40 transition-colors"
-              >
-                -
-              </button>
-              
-              <div className="relative flex-1">
-                <input
-                  type="number"
-                  step={unitType === 'kg' ? '0.1' : '50'}
-                  min={unitType === 'kg' ? '0.1' : '50'}
-                  value={quantityInput}
-                  onChange={(e) => setQuantityInput(e.target.value)}
-                  className="w-full bg-stone-950 border border-stone-800 rounded-xl pl-3 pr-8 py-2 text-stone-100 font-bold text-center focus:outline-none focus:border-amber-500 transition-colors text-sm"
-                  placeholder={unitType === 'kg' ? '1.5' : '500'}
-                />
-                <span className="absolute right-3 top-2.5 text-xs font-semibold text-stone-400 uppercase pointer-events-none">
-                  {unitType}
-                </span>
+            {/* Sayısal Input */}
+            <div className="relative mt-3">
+              <input
+                type="number"
+                step={unitType === 'kg' ? '0.1' : '50'}
+                min={unitType === 'kg' ? '0.1' : '50'}
+                value={quantityInput}
+                onChange={(e) => setQuantityInput(e.target.value)}
+                className="w-full bg-stone-950 border border-stone-800 rounded-xl px-4 py-2.5 text-stone-100 font-bold focus:outline-none focus:border-amber-500 transition-colors text-sm"
+                placeholder={unitType === 'kg' ? 'Örn: 1.5' : 'Örn: 500'}
+              />
+              <span className="absolute right-4 top-2.5 text-xs font-semibold text-stone-400 uppercase pointer-events-none">
+                {unitType}
+              </span>
+            </div>
+
+            {/* Hızlı Ekle/Çıkar Butonları */}
+            <div className="grid grid-cols-2 gap-2 mt-3">
+              <div className="flex items-center bg-stone-950 border border-stone-800 rounded-lg overflow-hidden h-8">
+                <button type="button" onClick={() => handleAddAmount(-250)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">-</button>
+                <span className="flex-1 text-center text-[11px] font-bold text-stone-300">250g</span>
+                <button type="button" onClick={() => handleAddAmount(250)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">+</button>
               </div>
-              
-              <button
-                type="button"
-                onClick={() => handleIncrement(unitType === 'kg' ? 1 : 250)}
-                className="w-10 h-10 shrink-0 flex items-center justify-center bg-stone-950 hover:bg-stone-800 text-stone-300 font-bold rounded-xl border border-stone-800 hover:border-amber-500/40 transition-colors"
-              >
-                +
-              </button>
+              <div className="flex items-center bg-stone-950 border border-stone-800 rounded-lg overflow-hidden h-8">
+                <button type="button" onClick={() => handleAddAmount(-500)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">-</button>
+                <span className="flex-1 text-center text-[11px] font-bold text-stone-300">500g</span>
+                <button type="button" onClick={() => handleAddAmount(500)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">+</button>
+              </div>
+              <div className="flex items-center bg-stone-950 border border-stone-800 rounded-lg overflow-hidden h-8">
+                <button type="button" onClick={() => handleAddAmount(-1000)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">-</button>
+                <span className="flex-1 text-center text-[11px] font-bold text-stone-300">1 kg</span>
+                <button type="button" onClick={() => handleAddAmount(1000)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">+</button>
+              </div>
+              <div className="flex items-center bg-stone-950 border border-stone-800 rounded-lg overflow-hidden h-8">
+                <button type="button" onClick={() => handleAddAmount(-2000)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">-</button>
+                <span className="flex-1 text-center text-[11px] font-bold text-stone-300">2 kg</span>
+                <button type="button" onClick={() => handleAddAmount(2000)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">+</button>
+              </div>
             </div>
           </div>
         </div>
