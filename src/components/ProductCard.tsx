@@ -73,9 +73,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
     }
   };
 
-  const handlePresetSelect = (presetKg: number, type: UnitType, valStr: string) => {
-    setUnitType(type);
-    setQuantityInput(valStr);
+  const handleIncrement = (amount: number) => {
+    let current = parseFloat(quantityInput) || 0;
+    let next = current + amount;
+    
+    // Alt sınır
+    const minVal = unitType === 'kg' ? 0.1 : 50;
+    if (next < minVal) next = minVal;
+    
+    // JS ondalık düzeltmesi
+    if (unitType === 'kg') {
+      next = parseFloat(next.toFixed(2));
+    } else {
+      next = Math.round(next);
+    }
+    
+    setQuantityInput(next.toString());
   };
 
   return (
@@ -168,35 +181,35 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
               </span>
             </div>
 
-            {/* Hızlı Seçim Hazır Butonları */}
+            {/* Artırma / Eksiltme Butonları */}
             <div className="grid grid-cols-4 gap-1.5 mt-2">
               <button
                 type="button"
-                onClick={() => handlePresetSelect(0.25, 'g', '250')}
+                onClick={() => handleIncrement(unitType === 'kg' ? -1 : -250)}
                 className="py-1 px-1 bg-stone-950 hover:bg-stone-800 text-[11px] font-medium text-stone-300 rounded border border-stone-800 hover:border-amber-500/40 transition-colors"
               >
-                250g
+                - {unitType === 'kg' ? '1 kg' : '250g'}
               </button>
               <button
                 type="button"
-                onClick={() => handlePresetSelect(0.5, 'g', '500')}
+                onClick={() => handleIncrement(unitType === 'kg' ? -0.5 : -50)}
                 className="py-1 px-1 bg-stone-950 hover:bg-stone-800 text-[11px] font-medium text-stone-300 rounded border border-stone-800 hover:border-amber-500/40 transition-colors"
               >
-                500g
+                - {unitType === 'kg' ? '0.5 kg' : '50g'}
               </button>
               <button
                 type="button"
-                onClick={() => handlePresetSelect(1, 'kg', '1')}
+                onClick={() => handleIncrement(unitType === 'kg' ? 0.5 : 50)}
                 className="py-1 px-1 bg-stone-950 hover:bg-stone-800 text-[11px] font-medium text-stone-300 rounded border border-stone-800 hover:border-amber-500/40 transition-colors"
               >
-                1 Kg
+                + {unitType === 'kg' ? '0.5 kg' : '50g'}
               </button>
               <button
                 type="button"
-                onClick={() => handlePresetSelect(2, 'kg', '2')}
+                onClick={() => handleIncrement(unitType === 'kg' ? 1 : 250)}
                 className="py-1 px-1 bg-stone-950 hover:bg-stone-800 text-[11px] font-medium text-stone-300 rounded border border-stone-800 hover:border-amber-500/40 transition-colors"
               >
-                2 Kg
+                + {unitType === 'kg' ? '1 kg' : '250g'}
               </button>
             </div>
           </div>
