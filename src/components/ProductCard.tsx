@@ -188,19 +188,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
                 <button type="button" onClick={() => handleAddAmount(250)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">+</button>
               </div>
               <div className="flex items-center bg-stone-950 border border-stone-800 rounded-lg overflow-hidden h-8">
-                <button type="button" onClick={() => handleAddAmount(-500)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">-</button>
-                <span className="flex-1 text-center text-[11px] font-bold text-stone-300">500g</span>
-                <button type="button" onClick={() => handleAddAmount(500)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">+</button>
-              </div>
-              <div className="flex items-center bg-stone-950 border border-stone-800 rounded-lg overflow-hidden h-8">
                 <button type="button" onClick={() => handleAddAmount(-1000)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">-</button>
                 <span className="flex-1 text-center text-[11px] font-bold text-stone-300">1 kg</span>
                 <button type="button" onClick={() => handleAddAmount(1000)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">+</button>
-              </div>
-              <div className="flex items-center bg-stone-950 border border-stone-800 rounded-lg overflow-hidden h-8">
-                <button type="button" onClick={() => handleAddAmount(-2000)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">-</button>
-                <span className="flex-1 text-center text-[11px] font-bold text-stone-300">2 kg</span>
-                <button type="button" onClick={() => handleAddAmount(2000)} className="w-8 h-full bg-stone-900 hover:bg-stone-800 text-stone-400 font-bold">+</button>
               </div>
             </div>
           </div>
