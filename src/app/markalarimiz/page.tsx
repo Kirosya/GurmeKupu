@@ -38,9 +38,6 @@ export default function BrandsPage() {
           <section className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 bg-white p-8 md:p-12 rounded-[3rem] shadow-xl shadow-orange-900/5">
             <div className="w-full lg:w-1/2 order-2 lg:order-1">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center shadow-sm">
-                  <Utensils className="w-8 h-8" />
-                </div>
                 <h2 className="text-4xl font-serif font-bold text-stone-900">Gurme Küpü</h2>
               </div>
               <h3 className="text-xl font-bold text-orange-600 mb-4">Profesyonel mutfakların güvenilir çözüm ortağı.</h3>
@@ -69,9 +66,6 @@ export default function BrandsPage() {
             </div>
             <div className="w-full lg:w-1/2">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center shadow-sm">
-                  <ShieldCheck className="w-8 h-8" />
-                </div>
                 <h2 className="text-4xl font-serif font-bold text-stone-900">Gurme Destek</h2>
               </div>
               <h3 className="text-xl font-bold text-orange-600 mb-4">Lezzetin arkasındaki profesyonel destek.</h3>
@@ -90,9 +84,6 @@ export default function BrandsPage() {
           <section className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 bg-white p-8 md:p-12 rounded-[3rem] shadow-xl shadow-orange-900/5">
             <div className="w-full lg:w-1/2 order-2 lg:order-1">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center shadow-sm">
-                  <GraduationCap className="w-8 h-8" />
-                </div>
                 <h2 className="text-4xl font-serif font-bold text-stone-900">Gurme Akademi</h2>
               </div>
               <h3 className="text-xl font-bold text-orange-600 mb-4">Bilginin, deneyimin ve profesyonelliğin buluşma noktası.</h3>
